@@ -1,16 +1,6 @@
-# waha
-
-A mobile app for the students of the Athénée de Waha
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Waha Application
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://wylarel.com/mit/)
+[![Discord](https://img.shields.io/badge/Chat-Discord-blue)](https://discord.gg/7qvmeh2)
+[![Flutter](https://img.shields.io/badge/Made%20with-Flutter-orange)](https://flutter.dev/)
+## A mobile app for the students of the Athénée de Waha
+Using [Flutter](https://flutter.dev/)
