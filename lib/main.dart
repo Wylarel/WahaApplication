@@ -6,21 +6,25 @@ import 'module/news/news_view.dart';
 import 'module/notes/note_list_view.dart';
 import 'module/schedule/schedule_view.dart';
 
-void main() {
-  runApp(
-    new MaterialApp(
+void main() => runApp(WahaApp());
+
+class WahaApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       title: 'Waha',
       theme: new ThemeData(
-        primarySwatch: Colors.pink
+          primarySwatch: Colors.pink
       ),
       home: NewsPage(),
-      routes:  {
+      routes:
+      {
         Routes.news: (context) => NewsPage(),
         Routes.schedule: (context) => SchedulePage(),
         Routes.notes: (context) => NotesPage(),
         Routes.food: (context) => FoodPage(),
         Routes.bugreport: (context) => BugreportPage(),
       },
-    )
-  );
+    );
+  }
 }
