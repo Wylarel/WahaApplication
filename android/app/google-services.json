@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "284210784722",
+    "firebase_url": "https://wahaapplication.firebaseio.com",
+    "project_id": "wahaapplication",
+    "storage_bucket": "wahaapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284210784722:android:3edd3016312c25fdc6800b",
+        "android_client_info": {
+          "package_name": "com.wylarel.waha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "284210784722-dkqjt07rfa7s07jquct6hue5oq176a6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOC8uucRqy-KlsnJEJc58x-jR5If7DkRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284210784722-dkqjt07rfa7s07jquct6hue5oq176a6p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

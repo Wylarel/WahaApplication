@@ -27,7 +27,16 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   fluttertoast: ^7.0.2
   http: 0.12.2
+  loading: ^1.0.2
 
+  firebase_core: ^0.4.5
+  firebase_core_web: ^0.1.1+2
+  firebase_auth: ^0.14.0+5
+  firebase_auth_web: ^0.1.3+1
+  firebase_analytics: ^5.0.2
+  cloud_firestore: ^0.13.7
+  cloud_firestore_web: ^0.1.1+2
+  firebase_auth_ui: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
