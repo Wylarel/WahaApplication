@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:waha/main.dart';
 import 'package:waha/routes/Routes.dart';
+import 'package:firebase_auth_ui/firebase_auth_ui.dart';
+
 
 
 class AppDrawer extends StatelessWidget {
@@ -36,6 +40,11 @@ class AppDrawer extends StatelessWidget {
               text: 'Signaler un bug',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.bugreport)),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.exit_to_app,
+              text: 'Se déconnecter',
+              onTap: () => _logout()),
           ListTile(
             title: Text('0.0.1'),
             onTap: () {},
@@ -54,11 +63,8 @@ class AppDrawer extends StatelessWidget {
           Positioned(
               bottom: 12.0,
               left: 16.0,
-              child: Text("Waha",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500))),
+              child: UserDisplayNameText()
+          ),
         ]));
   }
 
@@ -76,5 +82,36 @@ class AppDrawer extends StatelessWidget {
       ),
       onTap: onTap,
     );
+  }
+
+  void _logout() async {
+    await FirebaseAuthUi.instance().logout();
+  }
+}
+
+class UserDisplayNameText extends StatefulWidget {
+  @override
+  _UserDisplayNameTextState createState() => _UserDisplayNameTextState();
+}
+
+class _UserDisplayNameTextState extends State<UserDisplayNameText> {
+  String displayName = "";
+  Widget build(BuildContext context) {
+    return Text(displayName,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.w500
+        )
+    );
+  }
+
+  void initState() {
+    super.initState();
+    setDisplayName();
+  }
+
+  void setDisplayName() async {
+    FirebaseAuth.instance.currentUser().then((currentUser) => setState(() {displayName = currentUser.displayName;}));
   }
 }
