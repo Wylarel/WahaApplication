@@ -43,6 +43,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     }
     else {
       List<Widget> newsWidgets = new List<Widget>();
+      newsWidgets.add(Divider());
       _fetchedNews.forEach((newsItem) {
         newsWidgets.add(ListTile(
           title: Row(
@@ -54,6 +55,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                         left: 20.0, top: 8.0, bottom: 8.0, right: 6.0),
                     child: Text(
                       newsItem.text,
+                      textAlign: TextAlign.justify,
                     ),
                   )
               )
@@ -61,6 +63,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
           ),
           onTap: () => newsItem.link != null ? _launchURL(newsItem.link) : null,
         ),);
+        newsWidgets.add(Divider());
       });
       return Padding(
         padding: EdgeInsets.only(top: 10.0),

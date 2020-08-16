@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:waha/main.dart';
@@ -41,7 +42,11 @@ class AppDrawer extends StatelessWidget {
           _createDrawerItem(
               icon: Icons.exit_to_app,
               text: 'Se déconnecter',
-              onTap: () => _logout()),
+              onTap: () => FirebaseAuth.instance
+                  .signOut()
+                  .then((result) =>
+                  Navigator.pushReplacementNamed(context, Routes.login))
+                  .catchError((err) => print(err))),
           ListTile(
             title: Text('0.0.1'),
             onTap: () {},
@@ -80,10 +85,6 @@ class AppDrawer extends StatelessWidget {
       onTap: onTap,
     );
   }
-
-  void _logout() async {
-    // await FirebaseAuthUi.instance().logout();
-  }
 }
 
 class UserDisplayNameText extends StatefulWidget {
@@ -94,7 +95,7 @@ class UserDisplayNameText extends StatefulWidget {
 class _UserDisplayNameTextState extends State<UserDisplayNameText> {
   String displayName = "";
   Widget build(BuildContext context) {
-    return Text(displayName,
+    return Text(displayName != null ? displayName : "Invité",
         style: TextStyle(
             color: Colors.white,
             fontSize: 20.0,
@@ -109,6 +110,8 @@ class _UserDisplayNameTextState extends State<UserDisplayNameText> {
   }
 
   void setDisplayName() async {
-    FirebaseAuth.instance.currentUser().then((currentUser) => setState(() {displayName = currentUser.displayName;}));
+    FirebaseAuth.instance.currentUser().then((user) =>
+      Firestore.instance.document('users/' + user.uid).get().then((documentSnapshot) => setState(() {displayName = '${documentSnapshot.data["fname"]} ${documentSnapshot.data["surname"]}';}))
+    );
   }
 }

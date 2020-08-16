@@ -1,5 +1,7 @@
 class Routes {
+  static const String splash = "/splash";
   static const String login = "/login";
+  static const String register = "/register";
   static const String news = "/news";
   static const String schedule = "/schedule";
   static const String notes = "/notes";
