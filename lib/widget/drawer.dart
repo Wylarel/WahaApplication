@@ -2,9 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:waha/main.dart';
 import 'package:waha/routes/Routes.dart';
-import 'package:firebase_auth_ui/firebase_auth_ui.dart';
-
-
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -85,7 +82,7 @@ class AppDrawer extends StatelessWidget {
   }
 
   void _logout() async {
-    await FirebaseAuthUi.instance().logout();
+    // await FirebaseAuthUi.instance().logout();
   }
 }
 
