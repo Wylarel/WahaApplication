@@ -72,9 +72,10 @@ class _SmsCommandWidgetState extends State<SmsCommandWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          DropdownButton<Restaurant>(
+          DropdownButtonFormField<Restaurant>(
+            validator: (value) => value == null ? "Veuillez séléctioner une sandwicherie" : null,
             isExpanded: true,
-            hint:  Text("Sandwicherie"),
+            hint:  Text("Sandwicherie*"),
             value: selectedRestaurant,
             onChanged: (Restaurant Value) {
               setState(() {
