@@ -6,6 +6,7 @@ class Routes {
   static const String schedule = "/schedule";
   static const String notes = "/notes";
   static const String editnote = "/editnote";
+  static const String periodictable = "/periodictable";
   static const String food = "/food";
   static const String bugreport = "/bugreport";
 }

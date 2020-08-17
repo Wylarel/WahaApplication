@@ -29,6 +29,12 @@ class AppDrawer extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, Routes.notes)),
           Divider(),
           _createDrawerItem(
+              icon: Icons.school,
+              text: 'Tableau périodique',
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, Routes.periodictable)),
+          Divider(),
+          _createDrawerItem(
               icon: Icons.fastfood,
               text: 'Commander un repas',
               onTap: () =>

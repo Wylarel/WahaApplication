@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'module/periodictable/periodictable_view.dart';
 import 'package:waha/routes/Routes.dart';
 import 'data/colors.dart';
 import 'module/auth/register.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           Routes.schedule: (context) => SchedulePage(),
           Routes.notes: (context) => NotesPage(),
           Routes.editnote: (context) => EditNotePage(),
+          Routes.periodictable: (context) => PeriodicTablePage(),
           Routes.food: (context) => FoodPage(),
           Routes.bugreport: (context) => BugreportPage(),
         });
