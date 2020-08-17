@@ -15,8 +15,10 @@ class BugreportPage extends StatelessWidget {
         ),
         drawer: AppDrawer(),
         body: Padding(
-          padding: const EdgeInsets.only(top: 30.0, left: 8.0, right: 8.0),
+          padding: const EdgeInsets.only(top: 0.0, left: 8.0, right: 8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
