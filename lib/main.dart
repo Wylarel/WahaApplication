@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:waha/routes/Routes.dart';
+import 'data/colors.dart';
 import 'module/auth/register.dart';
 import 'module/auth/splash.dart';
 import 'module/auth/login.dart';
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Waha',
         theme: ThemeData(
-          primarySwatch: Colors.pink,
+          primarySwatch: getPink(),
         ),
         home: SplashPage(),
         routes: <String, WidgetBuilder>{

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waha/data/colors.dart';
 import 'package:waha/widget/drawer.dart';
 
 
@@ -8,7 +9,7 @@ class SchedulePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Horaire"),
-          backgroundColor: Colors.pink,
+          backgroundColor: getPink(),
         ),
         drawer: AppDrawer(),
         body: Center(

@@ -1,7 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'file:///C:/Projects/Flutter/WahaApplication/lib/module/auth/home.dart';
 import 'package:waha/routes/Routes.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -65,6 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                         labelText: 'Prénom*', hintText: "Jean"),
                     controller: firstNameInputController,
+                    autofillHints: [AutofillHints.givenName, AutofillHints.name],
                     validator: (value) {
                       return value.length < 3 ? "Veuillez entrer un nom valide.": null;
                     },
@@ -73,6 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                           labelText: 'Nom de famille*', hintText: "Dupont"),
                       controller: lastNameInputController,
+                      autofillHints: [AutofillHints.familyName],
                       validator: (value) {
                         return value.length < 3 ? "Veuillez entrer un nom valide.": null;
                       }),
@@ -80,6 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                         labelText: 'Email*', hintText: "jean.dupont@gmail.com"),
                     controller: emailInputController,
+                    autofillHints: [AutofillHints.email],
                     keyboardType: TextInputType.emailAddress,
                     validator: emailValidator,
                   ),
@@ -87,6 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                         labelText: 'Mot de passe*', hintText: "********"),
                     controller: pwdInputController,
+                    autofillHints: [AutofillHints.newPassword],
                     obscureText: true,
                     validator: pwdValidator,
                   ),
@@ -94,6 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                         labelText: 'Confirmation du mot de passe*', hintText: "********"),
                     controller: confirmPwdInputController,
+                    autofillHints: [AutofillHints.newPassword],
                     obscureText: true,
                     validator: pwdValidator,
                   ),
@@ -127,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           emailInputController.clear(),
                                           pwdInputController.clear(),
                                           confirmPwdInputController.clear()
-                                        })
+                                        }).then((value) => _saveDeviceToken())
                                     .catchError((err) => print(err)))
                                 .catchError((err) => print(err));
                           } else {
@@ -154,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Text("Vous avez déjà un compte ?"),
                   FlatButton(
-                    child: Text("Connectez-vous ici !"),
+                    child: Text("Connectez-vous ici !", style: TextStyle(fontWeight: FontWeight.bold),),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -162,5 +167,30 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ))));
+  }
+}
+
+/// Get the token, save it to the database for current user
+_saveDeviceToken() async {
+  // Get the current user
+  // String uid = uid;
+  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+  // Get the token for this device
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+  String fcmToken = await _fcm.getToken();
+
+  // Save it to Firestore
+  if (fcmToken != null) {
+    var tokens = Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .collection('tokens')
+        .document(fcmToken);
+
+    await tokens.setData({
+      'token': fcmToken,
+      'createdAt': FieldValue.serverTimestamp()
+    });
   }
 }

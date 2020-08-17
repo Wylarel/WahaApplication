@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:waha/main.dart';
+import 'package:waha/data/colors.dart';
 import 'package:waha/routes/Routes.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -60,7 +60,7 @@ class AppDrawer extends StatelessWidget {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        decoration: BoxDecoration( color: Colors.pink,),
+        decoration: BoxDecoration( color: getPink(),),
         child: Stack(children: <Widget>[
           Positioned(
               bottom: 12.0,

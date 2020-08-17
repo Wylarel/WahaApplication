@@ -1,7 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'file:///C:/Projects/Flutter/WahaApplication/lib/module/auth/home.dart';
 import 'package:waha/routes/Routes.dart';
 
 class LoginPage extends StatefulWidget {
@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: 'Email*',
                     hintText: "jean.dupont@gmail.com"),
                 controller: emailInputController,
+                autofillHints: [AutofillHints.email],
                 keyboardType: TextInputType.emailAddress,
                 validator: emailValidator,
               ),
@@ -67,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                     labelText: 'Mot de passe*', hintText: "********"),
                 controller: pwdInputController,
+                autofillHints: [AutofillHints.password],
                 obscureText: true,
                 validator: pwdValidator,
               ),
@@ -90,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                               .document(authResult.user.uid)
                               .get()
                               .then((DocumentSnapshot result) =>
-                              Navigator.pushReplacementNamed(context, Routes.news))
+                              Navigator.pushReplacementNamed(context, Routes.news)).then((value) => _saveDeviceToken())
                           .catchError((err) => print(err))
                       );
                     }
@@ -101,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Text("Vous n'avez pas encore de compte ?"),
                   FlatButton(
-                    child: Text("Inscrivez-vous ici!"),
+                    child: Text("Inscrivez-vous ici!", style: TextStyle(fontWeight: FontWeight.bold),),
                     onPressed: () {
                       Navigator.pushNamed(context, "/register");
                     },
@@ -113,5 +115,29 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+}
+
+_saveDeviceToken() async {
+  // Get the current user
+  // String uid = uid;
+  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+  // Get the token for this device
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+  String fcmToken = await _fcm.getToken();
+
+  // Save it to Firestore
+  if (fcmToken != null) {
+    var tokens = Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .collection('tokens')
+        .document(fcmToken);
+
+    await tokens.setData({
+      'token': fcmToken,
+      'createdAt': FieldValue.serverTimestamp()
+    });
   }
 }

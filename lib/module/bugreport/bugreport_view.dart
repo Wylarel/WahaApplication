@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waha/data/colors.dart';
 import 'package:waha/widget/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,7 +11,7 @@ class BugreportPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Signaler un bug"),
-          backgroundColor: Colors.pink,
+          backgroundColor: getPink(),
         ),
         drawer: AppDrawer(),
         body: ListView(

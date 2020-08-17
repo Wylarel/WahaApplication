@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:waha/data/colors.dart';
 import 'package:waha/routes/Routes.dart';
 import 'package:waha/widget/drawer.dart';
 import 'dart:math';
+
+import 'package:waha/widget/load.dart';
 
 
 String currentNoteId;
@@ -18,7 +19,7 @@ class NotesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Notes"),
-        backgroundColor: Colors.pink,
+        backgroundColor: getPink(),
       ),
       drawer: AppDrawer(),
       body: NoteListWidget(),
@@ -27,7 +28,7 @@ class NotesPage extends StatelessWidget {
           newNote(context);
         },
         child: Icon(Icons.add),
-        backgroundColor: Colors.pink,
+        backgroundColor: getPink(),
       ),
     );
   }
@@ -53,9 +54,7 @@ class NoteListWidget extends StatefulWidget {
 class _NoteListWidgetState extends State<NoteListWidget> {
   Widget build(BuildContext context) {
     return Center(
-      child: Loading(
-        indicator: BallPulseIndicator(), size: 100.0,color: Colors.pink,
-      ),
+      child: Load(100),
     );
   }
 
@@ -72,7 +71,7 @@ class EditNotePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             title: Text("Modifier une note"),
-            backgroundColor: Colors.pink,
+            backgroundColor: getPink(),
             actions: <Widget>[
               // action button
               IconButton(
