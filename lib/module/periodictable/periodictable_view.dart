@@ -4,7 +4,7 @@ import 'package:waha/widget/drawer.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
+// final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
 
 class PeriodicTablePage extends StatelessWidget {
   @override
@@ -15,32 +15,30 @@ class PeriodicTablePage extends StatelessWidget {
         .then((list) => list.map((json) => json != null ? ElementData.fromJson(json) : null).toList());
 
     return Scaffold(
-        key: _scaffoldKey,
+        // key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text("Tableau périodique"),
+        backgroundColor: getPink(),
+      ),
         drawer: AppDrawer(),
         body: FutureBuilder(
           future: gridList,
           builder: (_, snapshot) => snapshot.hasData ? _buildTable(snapshot.data)
               : Center(child: CircularProgressIndicator()),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
-          },
-          child: Icon(Icons.menu),
-          backgroundColor: getPink(),
-        ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
     );
   }
 
   Widget _buildTable(List<ElementData> elements) {
     final tiles = elements.map((element) => element != null ? ElementTile(element)
-        : Container(color: Colors.grey[200], margin: kGutterInset)).toList();
+        : Container(margin: kGutterInset, decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(3.0)),),)).toList();
 
-    return SingleChildScrollView(
-      child: SizedBox(height: kRowCount * (kContentSize + (kGutterWidth * 2)),
-        child: GridView.count(crossAxisCount: kRowCount, children: tiles,
-          scrollDirection: Axis.horizontal,),),);
+    return Center(
+      child: SingleChildScrollView(
+        child: SizedBox(height: kRowCount * (kContentSize + (kGutterWidth * 2)),
+          child: GridView.count(crossAxisCount: kRowCount, children: tiles,
+            scrollDirection: Axis.horizontal,),),),
+    );
   }
 }
 
@@ -74,11 +72,11 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listItems = <Widget>[
-      ListTile(leading: Icon(Icons.category), title : Text(element.category.toUpperCase())),
-      ListTile(leading: Icon(Icons.info), title : Text(element.extract),
-        subtitle: Text(element.source),),
+      ListTile(leading: Icon(Icons.category), title : Text(element.category), subtitle: Text('Catégorie'),),
       ListTile(leading: Icon(Icons.fiber_smart_record), title: Text(element.atomicWeight),
         subtitle: Text('Masse atomique'),),
+      ListTile(leading: Icon(Icons.info), title : Text(element.extract),
+        subtitle: Text(element.source,),),
     ].expand((widget) => [widget, Divider()]).toList();
 
     return Scaffold(
@@ -107,22 +105,22 @@ class ElementTile extends StatelessWidget implements PreferredSizeWidget {
     final tileText = <Widget>[
       Align(alignment: AlignmentDirectional.centerStart,
         child: Text('${element.number}', style: TextStyle(fontSize: 10.0, color: Colors.white)),),
-      Text(element.symbol, style: Theme.of(context).primaryTextTheme.headline5),
+      Text(element.symbol, style: TextStyle(fontSize: 23.0, color: Colors.white)),
       Text(element.name, maxLines: 1, overflow: TextOverflow.ellipsis,
-        textScaleFactor: isLarge ? 0.65 : 1, style: Theme.of(context).primaryTextTheme.bodyText1),
+        textScaleFactor: isLarge ? 0.65 : 1, style: TextStyle(color: Colors.white)),
     ];
     final tile = Container(
       margin: kGutterInset,
       width: kContentSize,
       height: kContentSize,
-      foregroundDecoration: BoxDecoration(
-        gradient: LinearGradient(colors: element.colors),
-        backgroundBlendMode: BlendMode.plus,),
+      decoration: BoxDecoration(
+        color: element.colors.first,
+        borderRadius: BorderRadius.all(Radius.circular(3.0)),
+        boxShadow: isLarge ? [BoxShadow(color: Color.lerp(Colors.black, Colors.transparent, .7), blurRadius: 12.0)] : [],
+      ),
       child: RawMaterialButton(
         onPressed: !isLarge ? () => Navigator.push(context,
             MaterialPageRoute(builder: (_) => DetailPage(element))) : null,
-        fillColor: Colors.black,
-        disabledElevation: 10.0,
         padding: kGutterInset * 2.0,
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: tileText),
       ),
