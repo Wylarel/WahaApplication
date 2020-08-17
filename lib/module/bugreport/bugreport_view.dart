@@ -20,7 +20,7 @@ class BugreportPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Pour signaler un bug, le mieux est de poster une issue sur le dépôt Github de l'application:", textAlign: TextAlign.center,
+                child: Text("Pour signaler un bug ou suggérer un changement/ajout, le mieux est d'ouvrir un ticket sur le dépôt Github de l'application:", textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0),),
               ),
               _createDrawerItem(icon: FontAwesomeIcons.github, text: "Dépôt Github", onTap: () => _launchURL("https://github.com/WahaDevs/WahaApplication/issues/new")),
