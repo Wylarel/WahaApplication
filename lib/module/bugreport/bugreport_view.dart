@@ -14,12 +14,27 @@ class BugreportPage extends StatelessWidget {
           backgroundColor: getPink(),
         ),
         drawer: AppDrawer(),
-        body: ListView(
-          children: <Widget>[
-            _createDrawerItem(icon: FontAwesomeIcons.facebookMessenger, text: "@wylarel", onTap: () => _launchURL("https://www.messenger.com/t/wylarel")),
-            _createDrawerItem(icon: FontAwesomeIcons.instagram, text: "@wylarel", onTap: () => _launchURL("https://www.instagram.com/wylarel")),
-            _createDrawerItem(icon: Icons.email, text: "contact@wylarel.com", onTap: () => _launchURL("mailto:contact@wylarel.com?subject=Signaler%20un%20bug%20sur%20l'app%20Waha")),
-          ]
+        body: Padding(
+          padding: const EdgeInsets.only(top: 30.0, left: 8.0, right: 8.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Pour signaler un bug, le mieux est de poster une issue sur le dépôt Github de l'application:", textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0),),
+              ),
+              _createDrawerItem(icon: FontAwesomeIcons.github, text: "Dépôt Github", onTap: () => _launchURL("https://github.com/WahaDevs/WahaApplication/issues/new")),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom:8.0, top: 26.0),
+                child: Text("Alternativement, contactez les développeurs:", textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0),),
+              ),
+              _createDrawerItem(icon: FontAwesomeIcons.facebookMessenger, text: "@wylarel", onTap: () => _launchURL("https://www.messenger.com/t/wylarel")),
+              _createDrawerItem(icon: FontAwesomeIcons.instagram, text: "@wylarel", onTap: () => _launchURL("https://www.instagram.com/wylarel")),
+              _createDrawerItem(icon: Icons.email, text: "contact@wylarel.com", onTap: () => _launchURL("mailto:contact@wylarel.com?subject=Signaler%20un%20bug%20sur%20l'app%20Waha")),
+            ],
+          ),
         )
     );
   }
