@@ -4,6 +4,7 @@ import 'package:waha/widget/drawer.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
+final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
 
 class PeriodicTablePage extends StatelessWidget {
   @override
@@ -14,16 +15,21 @@ class PeriodicTablePage extends StatelessWidget {
         .then((list) => list.map((json) => json != null ? ElementData.fromJson(json) : null).toList());
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Horaire"),
-          backgroundColor: getPink(),
-        ),
+        key: _scaffoldKey,
         drawer: AppDrawer(),
         body: FutureBuilder(
           future: gridList,
           builder: (_, snapshot) => snapshot.hasData ? _buildTable(snapshot.data)
               : Center(child: CircularProgressIndicator()),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+          child: Icon(Icons.menu),
+          backgroundColor: getPink(),
+        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
     );
   }
 
@@ -72,14 +78,14 @@ class DetailPage extends StatelessWidget {
       ListTile(leading: Icon(Icons.info), title : Text(element.extract),
         subtitle: Text(element.source),),
       ListTile(leading: Icon(Icons.fiber_smart_record), title: Text(element.atomicWeight),
-        subtitle: Text('Atomic Weight'),),
+        subtitle: Text('Masse atomique'),),
     ].expand((widget) => [widget, Divider()]).toList();
 
     return Scaffold(
       backgroundColor: Colors.white,
 
       appBar: AppBar(
-        backgroundColor: Color.lerp(Colors.grey[500], element.colors[1], 0),
+        backgroundColor: Color.lerp(getPink(), element.colors[1], 0),
         bottom: ElementTile(element, isLarge: true),),
 
       body: ListView(padding: EdgeInsets.only(top: 24.0), children: listItems),

@@ -99,16 +99,16 @@ class Category {
     postTransitionMetal, metalloid, reactiveNonmetal, nobleGas, unknown,
   ];
 
-  static const alkaliMetal         = Category._('Alkali Metal');
-  static const alkalineEarthMetal  = Category._('Alkaline Earth Metal');
-  static const lanthanide          = Category._('Lanthanide');
-  static const actinide            = Category._('Actinide');
-  static const transitionMetal     = Category._('Transition Metal');
-  static const postTransitionMetal = Category._('Post-transition Metal');
-  static const metalloid           = Category._('Metalloid');
-  static const reactiveNonmetal    = Category._('Reactive Nonmetal');
-  static const nobleGas            = Category._('Noble Gas');
-  static const unknown             = Category._('Unknown chemical properties');
+  static const alkaliMetal         = Category._('Métaux alcalins');
+  static const alkalineEarthMetal  = Category._('Métaux alcalino-terreux');
+  static const lanthanide          = Category._('Lanthanides');
+  static const actinide            = Category._('Actinides');
+  static const transitionMetal     = Category._('Métaux de transition');
+  static const postTransitionMetal = Category._('Métaux pauvres');
+  static const metalloid           = Category._('Métalloïdes');
+  static const reactiveNonmetal    = Category._('Non-métaux');
+  static const nobleGas            = Category._('Gaz nobles');
+  static const unknown             = Category._('Nature chimique inconnue');
 }
 
 /// Class representing each chemical element within the periodic table.
