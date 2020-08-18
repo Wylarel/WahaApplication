@@ -38,30 +38,24 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     }
     else {
       List<Widget> newsWidgets = new List<Widget>();
-      newsWidgets.add(Divider());
       _fetchedNews.forEach((newsItem) {
-        newsWidgets.add(ListTile(
-          title: Row(
-            children: <Widget>[
-              FaIcon(FontAwesomeIcons.newspaper),
-              Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: 20.0, top: 8.0, bottom: 8.0, right: 6.0),
-                    child: Text(
-                      newsItem.text,
-                      textAlign: TextAlign.justify,
-                    ),
-                  )
-              )
-            ],
+        newsWidgets.add(Card(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0, bottom: 8.0),
+            child: ListTile(
+              leading: FaIcon(FontAwesomeIcons.newspaper),
+              title: Text(newsItem.date),
+              subtitle: Text(
+                newsItem.text,
+                textAlign: TextAlign.justify,
+              ),
+              onTap: () => newsItem.link != null ? _launchURL(newsItem.link) : null,
+            ),
           ),
-          onTap: () => newsItem.link != null ? _launchURL(newsItem.link) : null,
         ),);
-        newsWidgets.add(Divider());
       });
       return Padding(
-        padding: EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.all(8.0),
         child: ListView(
           children: newsWidgets,
         ),
@@ -84,7 +78,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
 
     query.getDocuments().then((querySnapshot) {
       querySnapshot.documents.forEach((result) {
-        fetchedNews.add(new NewsItem(text: result.data["text"], link: result.data["link"]));
+        fetchedNews.add(new NewsItem(text: result.data["text"], link: result.data["link"], date: result.data["date"]));
       });
       setState(() {_fetchedNews = fetchedNews;});
     });
@@ -98,6 +92,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
 class NewsItem {
   final String text;
   final String link;
+  final String date;
 
-  NewsItem({this.text, this.link});
+  NewsItem({this.text, this.link, this.date});
 }

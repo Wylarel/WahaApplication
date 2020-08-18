@@ -80,7 +80,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     if (noteListWidgets.length > 0) {
       noteListWidgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text("Pour supprimer une note, appuyez longement dessus", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[600])),
+        child: Text("Pour supprimer une note, appuyez longuement dessus", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[600])),
       ));
       return Padding(
         padding: const EdgeInsets.all(8.0),
