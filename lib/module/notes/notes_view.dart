@@ -37,10 +37,8 @@ class NotesPage extends StatelessWidget {
     currentNoteId = String.fromCharCodes(new List.generate(32,(index){return new Random().nextInt(33)+89;}));
 
     final FirebaseAuth _auth = FirebaseAuth.instance;
-    final Firestore _firestore = Firestore.instance;
     FirebaseUser user = await _auth.currentUser();
-    _firestore.collection('notes').document(user.uid).setData({currentNoteId: ""});
-
+    Firestore.instance.collection('notes').document(user.uid).collection("notes").document(currentNoteId).setData({"text": ""});
     print("Created note " + currentNoteId);
     Navigator.pushReplacementNamed(context, Routes.editnote);
   }
@@ -52,15 +50,58 @@ class NoteListWidget extends StatefulWidget {
 }
 
 class _NoteListWidgetState extends State<NoteListWidget> {
+  Map<String, String> noteMap = new Map<String, String>();
+  bool hasLoadedNotes = false;
+
   Widget build(BuildContext context) {
-    return Center(
-      child: Load(100),
-    );
+    List<Widget> noteListWidgets = new List<Widget>();
+    noteMap.forEach((key, value) {
+      value = value.replaceAll("\n", "");
+      if(value.length > 128) {
+        value = value.substring(0, 128) + "...";
+      }
+      noteListWidgets.add(Card(child: ListTile(title: Text(value), onTap: () => openNote(key))));
+    });
+
+    if (noteListWidgets.length > 0) {
+      return Center(
+        child: ListView(
+          children: noteListWidgets,
+        ),
+      );
+    } else if (hasLoadedNotes) {
+      return Center(
+        child: Text("Vous n'avez pas encore créé de note !")
+      );
+    }
+    else {
+      return Center(
+        child: Load(100),
+      );
+    }
   }
 
   void initState() {
     super.initState();
     print("Init state notes");
+    Map<String, String> draftNoteMap = new Map<String, String>();
+    FirebaseAuth.instance.currentUser().then((user) =>
+        Firestore.instance.collection('notes').document(user.uid).collection(
+            "notes").getDocuments().then(
+                (querySnapshot) =>
+                querySnapshot.documents.forEach(
+                        (element) {
+                      draftNoteMap.putIfAbsent(
+                          element.documentID, () => element["text"]);
+                    }
+                )
+        )
+    ).then((value) => setState(() => {noteMap = draftNoteMap, hasLoadedNotes = true}));
+  }
+
+  void openNote(String id) {
+    currentNoteId = id;
+    Navigator.pushReplacementNamed(context, Routes.editnote);
   }
 }
 
@@ -69,25 +110,33 @@ class EditNotePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var editNoteFieldWidget = new EditNoteFieldWidget();
     return Scaffold(
-        appBar: AppBar(
-            title: Text("Modifier une note"),
-            backgroundColor: getPink(),
-            actions: <Widget>[
-              // action button
-              IconButton(
-                icon: Icon(Icons.save),
-                onPressed: () {
-                  saveNote(context, txt.text);
-                },
-              ),
-            ]),
-        body: editNoteFieldWidget,
+      appBar: AppBar(
+          title: Text("Modifier une note"),
+          backgroundColor: getPink(),
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {
+                saveNote(context, txt.text);
+              },
+            ),
+          ]),
+      body: editNoteFieldWidget,
     );
   }
 
   void saveNote(BuildContext context, String textToSave) async
   {
-    Firestore.instance.collection('notes').document("user").setData({currentNoteId: textToSave});
+    if (textToSave.replaceAll(" ", "") != "") {
+      FirebaseAuth.instance.currentUser().then((user) =>
+          Firestore.instance.collection('notes').document(user.uid).collection("notes").document(currentNoteId).setData({"text": textToSave})
+      );
+    } else {
+      FirebaseAuth.instance.currentUser().then((user) =>
+          Firestore.instance.collection('notes').document(user.uid).collection("notes").document(currentNoteId).delete()
+      );
+    }
     Navigator.pushReplacementNamed(context, Routes.notes);
   }
 }
@@ -116,9 +165,11 @@ class _EditNoteFieldWidgetState extends State<EditNoteFieldWidget> {
 
   void initState() {
     super.initState();
-  }
-
-  void setTextFieldText() async {
-    // Firestore.instance.collection('notes').document().get().then((QuerySnapshot snapshot) => txt.text = snapshot.documents.);
+    txt.text = "Chargement...";
+    FirebaseAuth.instance.currentUser().then((user) =>
+        Firestore.instance.collection('notes').document(user.uid).collection("notes").document(currentNoteId).get().then((snapshot) =>
+            txt.text = snapshot.data["text"] != null ? snapshot.data["text"] : ""
+        )
+    );
   }
 }
