@@ -82,10 +82,13 @@ class _NoteListWidgetState extends State<NoteListWidget> {
         padding: const EdgeInsets.all(8.0),
         child: Text("Pour supprimer une note, appuyez longement dessus", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[600])),
       ));
-      return RefreshIndicator(
-        onRefresh: () => updateNoteList(),
-        child: ListView(
-          children: noteListWidgets,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RefreshIndicator(
+          onRefresh: () => updateNoteList(),
+          child: ListView(
+            children: noteListWidgets,
+          ),
         ),
       );
     } else if (hasLoadedNotes) {
