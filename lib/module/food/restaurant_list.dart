@@ -37,7 +37,7 @@ final List<Entry> data = <Entry>[
           Entry(
             'Mmmhhh',
             <Entry>[
-              Entry('Boulevard d\'avroy, 82 | 9:00 - 14:00'),
+              Entry('Rue Fabry, 4 | 9:00 - 14:00'),
               Entry('Commande par téléphone: 08 546 02 06'),
               Entry('Commande par sms: 0499 83 90 73'),
             ],

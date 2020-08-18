@@ -5,7 +5,7 @@ import 'package:waha/data/colors.dart';
 import 'package:waha/routes/Routes.dart';
 import 'package:waha/widget/drawer.dart';
 import 'dart:math';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:waha/widget/load.dart';
 
 
@@ -57,14 +57,33 @@ class _NoteListWidgetState extends State<NoteListWidget> {
     List<Widget> noteListWidgets = new List<Widget>();
     noteMap.forEach((key, value) {
       value = value.replaceAll("\n", "");
-      if(value.length > 128) {
-        value = value.substring(0, 128) + "...";
+      if(value.length > 200) {
+        value = value.substring(0, 200) + "...";
       }
-      noteListWidgets.add(Card(child: ListTile(title: Text(value), onTap: () => openNote(key))));
+      noteListWidgets.add(Card(child: ListTile(
+        title:Text(value),
+        onTap: () => openNote(key),
+        onLongPress: () => AwesomeDialog(
+          context: context,
+          dialogType: DialogType.WARNING,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'Confirmer la suppression',
+          desc: 'Êtes-vous sûr de vouloir supprimer cette note ? Vous ne pourez pas la réstaurer.',
+          btnCancelText: "Annuler",
+          btnOkText: "Supprimer",
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {deleteNote(key);},
+        )..show())
+      ));
     });
 
     if (noteListWidgets.length > 0) {
-      return Center(
+      noteListWidgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("Pour supprimer une note, appuyez longement dessus", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[600])),
+      ));
+      return RefreshIndicator(
+        onRefresh: () => updateNoteList(),
         child: ListView(
           children: noteListWidgets,
         ),
@@ -83,25 +102,32 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   void initState() {
     super.initState();
-    print("Init state notes");
-    Map<String, String> draftNoteMap = new Map<String, String>();
-    FirebaseAuth.instance.currentUser().then((user) =>
-        Firestore.instance.collection('notes').document(user.uid).collection(
-            "notes").getDocuments().then(
-                (querySnapshot) =>
-                querySnapshot.documents.forEach(
-                        (element) {
-                      draftNoteMap.putIfAbsent(
-                          element.documentID, () => element["text"]);
-                    }
-                )
-        )
-    ).then((value) => setState(() => {noteMap = draftNoteMap, hasLoadedNotes = true}));
+    updateNoteList();
   }
 
   void openNote(String id) {
     currentNoteId = id;
     Navigator.pushReplacementNamed(context, Routes.editnote);
+  }
+
+  void deleteNote(String id) {
+    currentNoteId = id;
+    FirebaseAuth.instance.currentUser().then((user) =>
+        Firestore.instance.collection('notes').document(user.uid).collection("notes").document(currentNoteId).delete()
+    );
+    updateNoteList();
+  }
+
+  Future<void> updateNoteList() async
+  {
+    Map<String, String> draftNoteMap = new Map<String, String>();
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    QuerySnapshot querySnapshot = await Firestore.instance.collection('notes').document(user.uid).collection("notes").getDocuments();
+    querySnapshot.documents.forEach((element) {
+          draftNoteMap.putIfAbsent(
+              element.documentID, () => element["text"]);
+        });
+    setState(() => {noteMap = draftNoteMap, hasLoadedNotes = true});
   }
 }
 
@@ -154,7 +180,7 @@ class _EditNoteFieldWidgetState extends State<EditNoteFieldWidget> {
         maxLines: 1000000,
         controller: txt,
         decoration: InputDecoration(
-          hintText: "Ecrivez votre note ici puis sauvegardez en utilisant le boutton en haut à droite.",
+          hintText: "Ecrivez votre note ici",
           fillColor: Colors.white,
           filled: true,
           border: InputBorder.none,
