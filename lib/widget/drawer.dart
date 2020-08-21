@@ -1,72 +1,118 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:waha/data/colors.dart';
-import 'package:waha/routes/Routes.dart';
+import 'package:waha/module/auth/login.dart';
+import 'package:waha/module/bugreport/bugreport_view.dart';
+import 'package:waha/module/calculator/calculator_view.dart';
+import 'package:waha/module/cloudstorage/upload_download_view.dart';
+import 'package:waha/module/downloadapp/downloadapp_view.dart';
+import 'package:waha/module/food/food_view.dart';
+import 'package:waha/module/news/news_view.dart';
+import 'package:waha/module/notes/notes_view.dart';
+import 'package:waha/module/periodictable/periodictable_view.dart';
+import 'package:waha/module/schedule/schedule_view.dart';
+import 'package:waha/static/CurrentUserInfo.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:page_transition/page_transition.dart';
+import 'package:waha/static/config.dart';
+import 'package:waha/widget/theme.dart';
+import 'package:provider/provider.dart';
 
-class AppDrawer extends StatelessWidget {
+
+class AppDrawer extends StatefulWidget {
+  @override
+  _AppDrawerState createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  bool darkTheme = currentTheme.isDark();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          _createHeader(),
+          _createHeader(context),
           _createDrawerItem(
               icon: Icons.list,
               text: 'Nouveautés',
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.news)),
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: NewsPage()))),
           _createDrawerItem(
-              icon: Icons.calendar_today,
+              icon: FontAwesomeIcons.calendarAlt,
               text: 'Horaire',
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.schedule)),
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: SchedulePage()))),
           _createDrawerItem(
               icon: Icons.book,
               text: 'Notes',
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.notes)),
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: NotesPage()))),
           Divider(),
           _createDrawerItem(
-              icon: Icons.school,
+              icon: FontAwesomeIcons.atom,
               text: 'Tableau périodique',
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.periodictable)),
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: PeriodicTablePage()))),
+          _createDrawerItem(
+              icon: FontAwesomeIcons.calculator,
+              text: 'Calculatrice',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: CalculatorPage()))),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.file_upload,
+              text: 'Envoyer un fichier',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: UploadPage()))),
+          _createDrawerItem(
+              icon: Icons.file_download,
+              text: 'Recevoir un fichier',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: DownloadPage(isGuest: false)))),
           Divider(),
           _createDrawerItem(
               icon: Icons.fastfood,
               text: 'Commander un repas',
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.food)),
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: FoodPage()))),
           _createDrawerItem(
               icon: Icons.bug_report,
               text: 'Signaler un bug',
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.bugreport)),
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: BugreportPage()))),
           Divider(),
+          !kIsWeb ? Container() : _createDrawerItem(
+              icon: Icons.cloud_download,
+              text: 'Télécharger l\'app',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: DownloadAppPage()))),
           _createDrawerItem(
               icon: Icons.exit_to_app,
               text: 'Se déconnecter',
               onTap: () => FirebaseAuth.instance
                   .signOut()
                   .then((result) =>
-                  Navigator.pushReplacementNamed(context, Routes.login))
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: LoginPage())))
                   .catchError((err) => print(err))),
-          ListTile(
-            title: Text('0.0.1'),
-            onTap: () {},
+          SwitchListTile(
+            title: Text("Theme sombre"),
+            onChanged: (value) {setState(() {darkTheme = value;}); _changeTheme();},
+            value: darkTheme,
+            activeColor: Theme.of(context).accentColor,
           ),
         ],
       ),
     );
   }
 
-  Widget _createHeader() {
+  Widget _createHeader(BuildContext context) {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        decoration: BoxDecoration( color: getPink(),),
+        decoration: BoxDecoration( color: Theme.of(context).primaryColor),
         child: Stack(children: <Widget>[
           Positioned(
               bottom: 12.0,
@@ -81,7 +127,7 @@ class AppDrawer extends StatelessWidget {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(icon),
+          FaIcon(icon),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
             child: Text(text),
@@ -91,6 +137,10 @@ class AppDrawer extends StatelessWidget {
       onTap: onTap,
     );
   }
+
+  void _changeTheme() {
+    currentTheme.setTheme(darkTheme);
+  }
 }
 
 class UserDisplayNameText extends StatefulWidget {
@@ -99,9 +149,8 @@ class UserDisplayNameText extends StatefulWidget {
 }
 
 class _UserDisplayNameTextState extends State<UserDisplayNameText> {
-  String displayName = "";
   Widget build(BuildContext context) {
-    return Text(displayName != null ? displayName : "Invité",
+    return Text("${CurrentUserInfo.displayName}",
         style: TextStyle(
             color: Colors.white,
             fontSize: 20.0,
@@ -112,12 +161,5 @@ class _UserDisplayNameTextState extends State<UserDisplayNameText> {
 
   void initState() {
     super.initState();
-    setDisplayName();
-  }
-
-  void setDisplayName() async {
-    FirebaseAuth.instance.currentUser().then((user) =>
-      Firestore.instance.document('users/' + user.uid).get().then((documentSnapshot) => setState(() {displayName = '${documentSnapshot.data["fname"]} ${documentSnapshot.data["surname"]}';}))
-    );
   }
 }

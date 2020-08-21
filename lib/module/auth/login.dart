@@ -2,7 +2,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:waha/routes/Routes.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:waha/data/colors.dart';
+import 'package:waha/module/cloudstorage/upload_download_view.dart';
+import 'package:waha/widget/appbar.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -45,9 +48,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Connexion"),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(
@@ -87,13 +87,13 @@ class _LoginPageState extends State<LoginPage> {
                           email: emailInputController.text,
                           password: pwdInputController.text)
                           .then((authResult) =>
-                          Firestore.instance
+                          FirebaseFirestore.instance
                               .collection("users")
-                              .document(authResult.user.uid)
+                              .doc(authResult.user.uid)
                               .get()
                               .then((DocumentSnapshot result) =>
-                              Navigator.pushReplacementNamed(context, Routes.news)).then((value) => _saveDeviceToken())
-                          .catchError((err) => print(err))
+                              _saveDeviceToken())
+                              .catchError((err) => print(err))
                       );
                     }
                   },
@@ -102,11 +102,28 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   Text("Vous n'avez pas encore de compte ?"),
-                  FlatButton(
-                    child: Text("Inscrivez-vous ici!", style: TextStyle(fontWeight: FontWeight.bold),),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/register");
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FlatButton(
+                          color: Theme.of(context).cardColor,
+                          child: Text("Télécharger un fichier en invité",
+                            style: TextStyle(fontWeight: FontWeight.bold),),
+                          onPressed: () {
+                            Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: DownloadPage(isGuest: true,)));
+                          },
+                        ),
+                        SizedBox(width: 10.0,),
+                        FlatButton(
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          child: Text("S'inscrire",
+                            style: TextStyle(fontWeight: FontWeight.bold),),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/register");
+                          },
+                        ),
+                      ]
                   ),
                 ],
               )
@@ -121,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
 _saveDeviceToken() async {
   // Get the current user
   // String uid = uid;
-  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  User user = FirebaseAuth.instance.currentUser;
 
   // Get the token for this device
   final FirebaseMessaging _fcm = FirebaseMessaging();
@@ -129,13 +146,13 @@ _saveDeviceToken() async {
 
   // Save it to Firestore
   if (fcmToken != null) {
-    var tokens = Firestore.instance
+    var tokens = FirebaseFirestore.instance
         .collection('users')
-        .document(user.uid)
+        .doc(user.uid)
         .collection('tokens')
-        .document(fcmToken);
+        .doc(fcmToken);
 
-    await tokens.setData({
+    await tokens.set({
       'token': fcmToken,
       'createdAt': FieldValue.serverTimestamp()
     });

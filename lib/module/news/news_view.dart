@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:waha/data/colors.dart';
 import 'package:waha/widget/drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waha/widget/load.dart';
+import 'package:waha/widget/appbar.dart';
 
 
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Nouveautés"),
-          backgroundColor: getPink(),
-        ),
-        drawer: AppDrawer(),
+      appBar: CustomAppBar("Nouveautés", true),
+      drawer: AppDrawer(),
         body:
           NewsListWidget(),
     );
@@ -49,7 +46,7 @@ class _NewsListWidgetState extends State<NewsListWidget> {
                 newsItem.text,
                 textAlign: TextAlign.justify,
               ),
-              onTap: () => newsItem.link != null ? _launchURL(newsItem.link) : null,
+              onTap: () => newsItem.link != null ? _launchURL(newsItem.link) : {},
             ),
           ),
         ),);
@@ -73,12 +70,12 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     print("Fetching the lastest news...");
 
     List<NewsItem> fetchedNews = new List<NewsItem>();
-    CollectionReference idsRef = Firestore.instance.collection("news");
+    CollectionReference idsRef = FirebaseFirestore.instance.collection("news");
     Query query = idsRef.orderBy("sort_index", descending: true);
 
-    query.getDocuments().then((querySnapshot) {
-      querySnapshot.documents.forEach((result) {
-        fetchedNews.add(new NewsItem(text: result.data["text"], link: result.data["link"], date: result.data["date"]));
+    query.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        fetchedNews.add(new NewsItem(text: result.data()["text"], link: result.data()["link"], date: result.data()["date"]));
       });
       setState(() {_fetchedNews = fetchedNews;});
     });

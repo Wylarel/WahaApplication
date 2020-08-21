@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waha/data/colors.dart';
+import 'package:waha/widget/appbar.dart';
 import 'package:waha/widget/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,10 +9,7 @@ class BugreportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Signaler un bug"),
-          backgroundColor: getPink(),
-        ),
+        appBar: CustomAppBar("Signaler un bug", true),
         drawer: AppDrawer(),
         body: Padding(
           padding: const EdgeInsets.only(top: 0.0, left: 8.0, right: 8.0),

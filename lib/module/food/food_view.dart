@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:waha/data/colors.dart';
 import 'package:waha/module/food/restaurant_list.dart';
+import 'package:waha/widget/appbar.dart';
 import 'package:waha/widget/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waha/widget/load.dart';
 
 
 Restaurant selectedRestaurant;
@@ -15,21 +14,18 @@ class FoodPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Commander un repas"),
-          backgroundColor: getPink(),
-        ),
-        drawer: AppDrawer(),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: SmsCommandWidget(),
-            ),
-            Expanded(child: ExpansionTileSample(),),
-          ],
-        ),
+      appBar: CustomAppBar("Commander un repas", true),
+      drawer: AppDrawer(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: SmsCommandWidget(),
+          ),
+          Expanded(child: ExpansionTileSample(),),
+        ],
+      ),
     );
   }
 }
@@ -77,9 +73,9 @@ class _SmsCommandWidgetState extends State<SmsCommandWidget> {
             isExpanded: true,
             hint:  Text("Sandwicherie*"),
             value: selectedRestaurant,
-            onChanged: (Restaurant Value) {
+            onChanged: (Restaurant value) {
               setState(() {
-                selectedRestaurant = Value;
+                selectedRestaurant = value;
               });
             },
             items: smsRestaurants.map((Restaurant restaurant) {

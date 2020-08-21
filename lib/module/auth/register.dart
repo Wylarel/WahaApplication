@@ -2,7 +2,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:waha/routes/Routes.dart';
+import 'package:waha/data/colors.dart';
+import 'package:waha/widget/appbar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -18,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
   TextEditingController confirmPwdInputController;
+  bool acceptRGPD = false;
 
   @override
   initState() {
@@ -51,9 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Inscription"),
-        ),
+        appBar: CustomAppBar("Inscription", false),
         body: Container(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -103,6 +104,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     validator: pwdValidator,
                   ),
                   Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: SwitchListTile(
+                      activeColor: Theme.of(context).accentColor,
+                      title: Text("J'accepte l'utilisation de mes données à des fins de personnalisation de l'experience utilisateur.",
+                      style: TextStyle(fontSize: 12.0)),
+                      value: acceptRGPD,
+                      onChanged: (bool value) {setState(() {acceptRGPD = value;});},
+                      controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 20.0),
                     child: RaisedButton(
                       child: Text("S'inscrire"),
@@ -110,31 +122,44 @@ class _RegisterPageState extends State<RegisterPage> {
                       textColor: Colors.white,
                       onPressed: () {
                         if (_registerFormKey.currentState.validate()) {
-                          if (pwdInputController.text ==
-                              confirmPwdInputController.text) {
-                            FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                    email: emailInputController.text,
-                                    password: pwdInputController.text)
-                                .then((authResult) => Firestore.instance
-                                    .collection("users")
-                                    .document(authResult.user.uid)
-                                    .setData({
-                                      "uid": authResult.user.uid,
-                                      "fname": firstNameInputController.text,
-                                      "surname": lastNameInputController.text,
-                                      "email": emailInputController.text,
-                                    })
-                                    .then((result) => {
-                                          Navigator.pushReplacementNamed(context, Routes.news),
-                                          firstNameInputController.clear(),
-                                          lastNameInputController.clear(),
-                                          emailInputController.clear(),
-                                          pwdInputController.clear(),
-                                          confirmPwdInputController.clear()
-                                        }).then((value) => _saveDeviceToken())
-                                    .catchError((err) => print(err)))
-                                .catchError((err) => print(err));
+                          if (pwdInputController.text == confirmPwdInputController.text) {
+                            if(acceptRGPD) {
+                              FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                  email: emailInputController.text,
+                                  password: pwdInputController.text)
+                                  .then((authResult) =>
+                                  FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(authResult.user.uid)
+                                      .set({
+                                    "uid": authResult.user.uid,
+                                    "fname": firstNameInputController.text,
+                                    "surname": lastNameInputController.text,
+                                    "email": emailInputController.text,
+                                  })
+                                      .then((result) =>
+                                  {
+                                    firstNameInputController.clear(),
+                                    lastNameInputController.clear(),
+                                    emailInputController.clear(),
+                                    pwdInputController.clear(),
+                                    confirmPwdInputController.clear()
+                                  })
+                                      .then((value) => _saveDeviceToken())
+                                      .catchError((err) => print(err)))
+                                  .catchError((err) => print(err));
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Vous devez accepter l'utilisation de vos données pour vous inscrire",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: getPink(),
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
+                            }
                           } else {
                             showDialog(
                                 context: context,
@@ -174,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
 _saveDeviceToken() async {
   // Get the current user
   // String uid = uid;
-  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  User user = FirebaseAuth.instance.currentUser;
 
   // Get the token for this device
   final FirebaseMessaging _fcm = FirebaseMessaging();
@@ -182,13 +207,13 @@ _saveDeviceToken() async {
 
   // Save it to Firestore
   if (fcmToken != null) {
-    var tokens = Firestore.instance
+    var tokens = FirebaseFirestore.instance
         .collection('users')
-        .document(user.uid)
+        .doc(user.uid)
         .collection('tokens')
-        .document(fcmToken);
+        .doc(fcmToken);
 
-    await tokens.setData({
+    await tokens.set({
       'token': fcmToken,
       'createdAt': FieldValue.serverTimestamp()
     });

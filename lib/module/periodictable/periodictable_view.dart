@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waha/data/colors.dart';
+import 'package:waha/widget/appbar.dart';
 import 'package:waha/widget/drawer.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -16,22 +17,19 @@ class PeriodicTablePage extends StatelessWidget {
 
     return Scaffold(
         // key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text("Tableau périodique"),
-        backgroundColor: getPink(),
-      ),
-        drawer: AppDrawer(),
+      appBar: CustomAppBar("Tableau périodique", true),
+      drawer: AppDrawer(),
         body: FutureBuilder(
           future: gridList,
-          builder: (_, snapshot) => snapshot.hasData ? _buildTable(snapshot.data)
+          builder: (_, snapshot) => snapshot.hasData ? _buildTable(snapshot.data, context)
               : Center(child: CircularProgressIndicator()),
         ),
     );
   }
 
-  Widget _buildTable(List<ElementData> elements) {
+  Widget _buildTable(List<ElementData> elements, BuildContext context) {
     final tiles = elements.map((element) => element != null ? ElementTile(element)
-        : Container(margin: kGutterInset, decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(3.0)),),)).toList();
+        : Container(margin: kGutterInset, decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.all(Radius.circular(3.0)),),)).toList();
 
     return Center(
       child: SingleChildScrollView(
@@ -80,10 +78,10 @@ class DetailPage extends StatelessWidget {
     ].expand((widget) => [widget, Divider()]).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
 
       appBar: AppBar(
-        backgroundColor: Color.lerp(getPink(), element.colors[1], 0),
+        backgroundColor: Color.lerp(Theme.of(context).appBarTheme.color, element.colors[1], 0),
         bottom: ElementTile(element, isLarge: true),),
 
       body: ListView(padding: EdgeInsets.only(top: 24.0), children: listItems),
