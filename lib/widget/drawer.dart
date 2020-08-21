@@ -18,7 +18,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
-
 class AppDrawer extends StatefulWidget {
   @override
   _AppDrawerState createState() => _AppDrawerState();
@@ -26,6 +25,12 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   bool darkTheme = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AdaptiveTheme.getThemeMode().then((value) => setState(() {darkTheme = value == AdaptiveThemeMode.dark;}));
+  }
 
   @override
   Widget build(BuildContext context) {
