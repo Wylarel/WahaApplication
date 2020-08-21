@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waha/data/colors.dart';
 import 'package:waha/module/auth/login.dart';
 import 'package:waha/module/bugreport/bugreport_view.dart';
 import 'package:waha/module/calculator/calculator_view.dart';
@@ -15,9 +14,7 @@ import 'package:waha/module/schedule/schedule_view.dart';
 import 'package:waha/static/CurrentUserInfo.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:page_transition/page_transition.dart';
-import 'package:waha/static/config.dart';
-import 'package:waha/widget/theme.dart';
-import 'package:provider/provider.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 
 
 class AppDrawer extends StatefulWidget {
@@ -26,7 +23,7 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  bool darkTheme = currentTheme.isDark();
+  bool darkTheme = false;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +96,10 @@ class _AppDrawerState extends State<AppDrawer> {
                   .catchError((err) => print(err))),
           SwitchListTile(
             title: Text("Theme sombre"),
-            onChanged: (value) {setState(() {darkTheme = value;}); _changeTheme();},
+            onChanged: (value) {
+              setState(() {darkTheme = value;});
+              AdaptiveTheme.of(context).toggleThemeMode();
+              },
             value: darkTheme,
             activeColor: Theme.of(context).accentColor,
           ),
@@ -136,10 +136,6 @@ class _AppDrawerState extends State<AppDrawer> {
       ),
       onTap: onTap,
     );
-  }
-
-  void _changeTheme() {
-    currentTheme.setTheme(darkTheme);
   }
 }
 

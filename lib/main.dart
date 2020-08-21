@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:waha/static/config.dart';
 import 'package:waha/widget/load.dart';
 import 'module/calculator/calculator_view.dart';
 import 'module/cloudstorage/upload_download_view.dart';
@@ -18,19 +16,20 @@ import 'module/news/news_view.dart';
 import 'module/notes/notes_view.dart';
 import 'module/schedule/schedule_view.dart';
 import 'module/downloadapp/downloadapp_view.dart';
-
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  box = await Hive.openBox('easyTheme');
-  runApp(App());
+  WidgetsFlutterBinding.ensureInitialized();
+  final savedThemeMode = await AdaptiveTheme.getThemeMode();
+  runApp(App(savedThemeMode: savedThemeMode));
 }
 
 
 class App extends StatelessWidget {
+  final savedThemeMode;
+  const App({Key key, this.savedThemeMode}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -41,7 +40,7 @@ class App extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done)
           {
             print("FlutterFire loaded");
-            return MyApp();
+            return MyApp(savedThemeMode: savedThemeMode,);
           }
         print("FlutterFire loading");
         return Load(100);
@@ -50,53 +49,48 @@ class App extends StatelessWidget {
   }
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
 
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    currentTheme.addListener(() {
-      setState(() {});
-    });
-  }
+class MyApp extends StatelessWidget {
+  final savedThemeMode;
+  const MyApp({Key key, this.savedThemeMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Waha',
-        theme: ThemeData(
-          brightness: Brightness.light,
-          colorScheme: ColorScheme.light(),
-          primaryColor: getPink(),
-          accentColor: Colors.black87,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          colorScheme: ColorScheme.dark(),
-          accentColor: getPink(),
-        ),
-        themeMode: currentTheme.currentTheme(),
-        home: SplashPage(),
-        routes: <String, WidgetBuilder>{
-          Routes.splash: (context) => SplashPage(),
-          Routes.login: (context) => LoginPage(),
-          Routes.register: (context) => RegisterPage(),
-          Routes.news: (context) => NewsPage(),
-          Routes.schedule: (context) => SchedulePage(),
-          Routes.notes: (context) => NotesPage(),
-          Routes.editnote: (context) => EditNotePage(),
-          Routes.periodictable: (context) => PeriodicTablePage(),
-          Routes.calculator: (context) => CalculatorPage(),
-          Routes.cloudupload: (context) => UploadPage(),
-          Routes.clouddownload: (context) => DownloadPage(),
-          Routes.food: (context) => FoodPage(),
-          Routes.bugreport: (context) => BugreportPage(),
-          Routes.downloadapp: (context) => DownloadAppPage(),
-          Routes.downloadappdesktop: (context) => DownloadAppDesktopPage(),
-        });
+    return AdaptiveTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        colorScheme: ColorScheme.light(),
+        primaryColor: getPink(),
+        accentColor: Colors.black87,
+      ),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.dark(),
+        accentColor: getPink(),
+      ),
+      initial: savedThemeMode ?? AdaptiveThemeMode.light,
+      builder: (theme, darkTheme) => MaterialApp(
+          title: 'Waha',
+          theme: theme,
+          darkTheme: darkTheme,
+          home: SplashPage(),
+          routes: <String, WidgetBuilder>{
+            Routes.splash: (context) => SplashPage(),
+            Routes.login: (context) => LoginPage(),
+            Routes.register: (context) => RegisterPage(),
+            Routes.news: (context) => NewsPage(),
+            Routes.schedule: (context) => SchedulePage(),
+            Routes.notes: (context) => NotesPage(),
+            Routes.editnote: (context) => EditNotePage(),
+            Routes.periodictable: (context) => PeriodicTablePage(),
+            Routes.calculator: (context) => CalculatorPage(),
+            Routes.cloudupload: (context) => UploadPage(),
+            Routes.clouddownload: (context) => DownloadPage(),
+            Routes.food: (context) => FoodPage(),
+            Routes.bugreport: (context) => BugreportPage(),
+            Routes.downloadapp: (context) => DownloadAppPage(),
+            Routes.downloadappdesktop: (context) => DownloadAppDesktopPage(),
+          }),
+    );
   }
 }
