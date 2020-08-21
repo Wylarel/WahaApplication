@@ -124,13 +124,11 @@ class _AppDrawerState extends State<AppDrawer> {
           WaveWidget(
             config: CustomConfig(
               gradients: [
-                [Color(0x40FB0085), Color(0x40FB0085)],
-                [Color(0x40FB0085), Color(0x40FB0085)],
-                [Color(0x40FB0085), Color(0x40FB0085)],
+                [Color(0x30FB0085), Color(0x30FB0085)],
                 [Color(0xFFFB0085), Color(0xFFFB0085)]
               ],
-              durations: [35000, 19440, 10800, 6000],
-              heightPercentages: [0.1, 0.2, 0.3, 0.4],
+              durations: [21600, 12000],
+              heightPercentages: [0.3, 0.4],
               blur: MaskFilter.blur(BlurStyle.solid, 1),
               gradientBegin: Alignment.bottomLeft,
               gradientEnd: Alignment.topRight,
