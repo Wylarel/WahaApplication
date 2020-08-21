@@ -119,19 +119,12 @@ class _AppDrawerState extends State<AppDrawer> {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        decoration: BoxDecoration( color: Theme.of(context).backgroundColor),
         child: Stack(children: <Widget>[
           WaveWidget(
             config: CustomConfig(
-              gradients: [
-                [Color(0x30FB0085), Color(0x30FB0085)],
-                [Color(0xFFFB0085), Color(0xFFFB0085)]
-              ],
+              colors: Theme.of(context).brightness == Brightness.light ? [Color(0x30FB0085), Color(0xFFFB0085)] : [Colors.white38, Colors.white],
               durations: [21600, 12000],
               heightPercentages: [0.3, 0.4],
-              blur: MaskFilter.blur(BlurStyle.solid, 1),
-              gradientBegin: Alignment.bottomLeft,
-              gradientEnd: Alignment.topRight,
             ),
             waveAmplitude: 0,
             backgroundColor: Colors.transparent,
@@ -174,7 +167,7 @@ class _UserDisplayNameTextState extends State<UserDisplayNameText> {
   Widget build(BuildContext context) {
     return Text("${CurrentUserInfo.displayName}",
         style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).brightness == Brightness.light ? Colors.white : Theme.of(context).accentColor,
             fontSize: 20.0,
             fontWeight: FontWeight.w500
         )
