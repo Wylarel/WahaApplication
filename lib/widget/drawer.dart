@@ -15,6 +15,8 @@ import 'package:waha/static/CurrentUserInfo.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:page_transition/page_transition.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 
 
 class AppDrawer extends StatefulWidget {
@@ -98,7 +100,7 @@ class _AppDrawerState extends State<AppDrawer> {
             title: Text("Theme sombre"),
             onChanged: (value) {
               setState(() {darkTheme = value;});
-              AdaptiveTheme.of(context).toggleThemeMode();
+              AdaptiveTheme.of(context).setThemeMode(darkTheme ? AdaptiveThemeMode.dark : AdaptiveThemeMode.light);
               },
             value: darkTheme,
             activeColor: Theme.of(context).accentColor,
@@ -112,8 +114,29 @@ class _AppDrawerState extends State<AppDrawer> {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        decoration: BoxDecoration( color: Theme.of(context).primaryColor),
+        decoration: BoxDecoration( color: Theme.of(context).backgroundColor),
         child: Stack(children: <Widget>[
+          WaveWidget(
+            config: CustomConfig(
+              gradients: [
+                [Color(0x40FB0085), Color(0x40FB0085)],
+                [Color(0x40FB0085), Color(0x40FB0085)],
+                [Color(0x40FB0085), Color(0x40FB0085)],
+                [Color(0xFFFB0085), Color(0xFFFB0085)]
+              ],
+              durations: [35000, 19440, 10800, 6000],
+              heightPercentages: [0.1, 0.2, 0.3, 0.4],
+              blur: MaskFilter.blur(BlurStyle.solid, 1),
+              gradientBegin: Alignment.bottomLeft,
+              gradientEnd: Alignment.topRight,
+            ),
+            waveAmplitude: 0,
+            backgroundColor: Colors.transparent,
+            size: Size(
+              double.infinity,
+              double.infinity,
+            ),
+          ),
           Positioned(
               bottom: 12.0,
               left: 16.0,

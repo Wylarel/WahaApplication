@@ -62,6 +62,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.light(),
         primaryColor: getPink(),
         accentColor: Colors.black87,
+        backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
