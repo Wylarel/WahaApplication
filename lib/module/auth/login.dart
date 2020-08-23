@@ -81,21 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       .primaryColor,
                   textColor: Colors.white,
                   onPressed: () {
-                    if (_loginFormKey.currentState.validate()) {
-                      FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                          email: emailInputController.text,
-                          password: pwdInputController.text)
-                          .then((authResult) =>
-                          FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(authResult.user.uid)
-                              .get()
-                              .then((DocumentSnapshot result) =>
-                              _saveDeviceToken())
-                              .catchError((err) => print(err))
-                      );
-                    }
+                    loginUser();
                   },
                 ),
               ),
@@ -103,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Text("Vous n'avez pas encore de compte ?"),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FlatButton(
                           color: Theme.of(context).cardColor,
@@ -133,8 +119,20 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
 
+  void loginUser() async {
+    if (_loginFormKey.currentState.validate()) {
+      FirebaseAuth _auth = FirebaseAuth.instance;
+      UserCredential authResult = await _auth.signInWithEmailAndPassword(
+          email: emailInputController.text,
+          password: pwdInputController.text
+      );
+      DocumentSnapshot result = await FirebaseFirestore.instance
+          .collection("users").doc(authResult.user.uid).get();
+      _saveDeviceToken();
+    }
+  }
+}
 _saveDeviceToken() async {
   // Get the current user
   // String uid = uid;
