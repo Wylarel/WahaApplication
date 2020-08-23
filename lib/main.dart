@@ -17,7 +17,6 @@ import 'module/notes/notes_view.dart';
 import 'module/schedule/schedule_view.dart';
 import 'module/downloadapp/downloadapp_view.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:waha/data/colors.dart';
 import 'package:waha/module/cloudstorage/upload_download_view.dart';
-import 'package:waha/widget/appbar.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:waha/widget/load.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
+  bool waiting = false;
 
   @override
   initState() {
@@ -31,15 +32,15 @@ class _LoginPageState extends State<LoginPage> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value)) {
-      return 'Email format is invalid';
+      return 'L\'email n\'est pas valide';
     } else {
       return null;
     }
   }
 
   String pwdValidator(String value) {
-    if (value.length < 8) {
-      return 'Password must be longer than 8 characters';
+    if (value.length < 6) {
+      return 'Le mot de passe doit contenir plus de 6 caractères';
     } else {
       return null;
     }
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 decoration: InputDecoration(
                     labelText: 'Email*',
-                    hintText: "jean.dupont@gmail.com"),
+                    hintText: "Entrez votre email"),
                 controller: emailInputController,
                 autofillHints: [AutofillHints.email],
                 keyboardType: TextInputType.emailAddress,
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 20.0),
-                child: RaisedButton(
+                child: waiting ? Load(100) : RaisedButton(
                   child: Text("Se connecter"),
                   color: Theme
                       .of(context)
@@ -122,34 +123,42 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginUser() async {
     if (_loginFormKey.currentState.validate()) {
+      setState(() {waiting = true;});
       FirebaseAuth _auth = FirebaseAuth.instance;
-      UserCredential authResult = await _auth.signInWithEmailAndPassword(
-          email: emailInputController.text,
-          password: pwdInputController.text
-      );
-      DocumentSnapshot result = await FirebaseFirestore.instance
-          .collection("users").doc(authResult.user.uid).get();
+      try {
+        UserCredential authResult = await _auth.signInWithEmailAndPassword(
+            email: emailInputController.text,
+            password: pwdInputController.text
+        );
+      }
+      catch(platformExceptionToFirebaseAuthException) {
+        print("Wrong credentials");
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'Mauvais identifiants',
+          desc: 'Votre mot de passe ou adresse email est incorrect, veuillez réessayer',
+          btnCancelText: "Rééssayer",
+          btnCancelOnPress: () {pwdInputController.text = "";},
+        ).show();
+        setState(() {waiting = false;});
+        return;
+      }
       _saveDeviceToken();
     }
   }
 }
 _saveDeviceToken() async {
-  // Get the current user
-  // String uid = uid;
   User user = FirebaseAuth.instance.currentUser;
-
-  // Get the token for this device
   final FirebaseMessaging _fcm = FirebaseMessaging();
   String fcmToken = await _fcm.getToken();
-
-  // Save it to Firestore
   if (fcmToken != null) {
     var tokens = FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .collection('tokens')
         .doc(fcmToken);
-
     await tokens.set({
       'token': fcmToken,
       'createdAt': FieldValue.serverTimestamp()
