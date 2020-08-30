@@ -1,9 +1,8 @@
-# Waha Application
+<img src="https://wahadl.web.app/ressources/img/repoheader.png" alt="Waha App Banner" width="200px">
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://wylarel.com/mit/)
 [![Discord](https://img.shields.io/badge/Chat-Discord-blue)](https://discord.gg/7qvmeh2)
 [![Flutter](https://img.shields.io/badge/Made%20with-Flutter-orange)](https://flutter.dev/)
-<br><br><br>
-<img src="https://wahadl.web.app/ressources/img/repoheader.png" alt="Waha App Banner" width="200px">
 
 ## <span>&#x1F1EB;&#x1F1F7;</span> Une application mobile pour les étudiants de l'Athénée de Waha
 L'application Waha permet à tout les élèves de recevoir leurs horaires syncronisés en direct et les dernières nouvelles de l'école. Elle donne également accès des utilitaires tels que des prises de notes syncronisées sur tout les appareils, un cloud gratuit et sans limite, un tableau périodique interractif, un dictionnaire avec plus de 500.000 définitions, ou une calculatrice scientifique, tout ça intégré directement dans une seule et même application.
