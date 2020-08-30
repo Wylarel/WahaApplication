@@ -228,32 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
       emailInputController.clear();
       pwdInputController.clear();
       confirmPwdInputController.clear();
-      _saveDeviceToken();
+      Navigator.pushNamed(context, "/splash");
     }
-  }
-}
-
-/// Get the token, save it to the database for current user
-_saveDeviceToken() async {
-  // Get the current user
-  // String uid = uid;
-  User user = FirebaseAuth.instance.currentUser;
-
-  // Get the token for this device
-  final FirebaseMessaging _fcm = FirebaseMessaging();
-  String fcmToken = await _fcm.getToken();
-
-  // Save it to Firestore
-  if (fcmToken != null) {
-    var tokens = FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .collection('tokens')
-        .doc(fcmToken);
-
-    await tokens.set({
-      'token': fcmToken,
-      'createdAt': FieldValue.serverTimestamp()
-    });
   }
 }

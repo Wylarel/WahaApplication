@@ -145,23 +145,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {waiting = false;});
         return;
       }
-      _saveDeviceToken();
+      Navigator.pushNamed(context, "/splash");
     }
-  }
-}
-_saveDeviceToken() async {
-  User user = FirebaseAuth.instance.currentUser;
-  final FirebaseMessaging _fcm = FirebaseMessaging();
-  String fcmToken = await _fcm.getToken();
-  if (fcmToken != null) {
-    var tokens = FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .collection('tokens')
-        .doc(fcmToken);
-    await tokens.set({
-      'token': fcmToken,
-      'createdAt': FieldValue.serverTimestamp()
-    });
   }
 }
