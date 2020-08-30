@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waha/data/colors.dart';
 import 'package:waha/widget/appbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:waha/widget/load.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -21,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController pwdInputController;
   TextEditingController confirmPwdInputController;
   bool acceptRGPD = false;
+  bool waiting = false;
 
   @override
   initState() {
@@ -44,8 +46,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   String pwdValidator(String value) {
-    if (value.length < 8) {
-      return 'Le mot de passe doit contenir plus de 8 charactères';
+    if (value.length < 6) {
+      return 'Le mot de passe doit contenir plus de 6 charactères';
     } else {
       return null;
     }
@@ -59,139 +61,175 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
                 child: Form(
-              key: _registerFormKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Prénom*', hintText: "Jean"),
-                    controller: firstNameInputController,
-                    autofillHints: [AutofillHints.givenName, AutofillHints.name],
-                    validator: (value) {
-                      return value.length < 3 ? "Veuillez entrer un nom valide.": null;
-                    },
-                  ),
-                  TextFormField(
-                      decoration: InputDecoration(
-                          labelText: 'Nom de famille*', hintText: "Dupont"),
-                      controller: lastNameInputController,
-                      autofillHints: [AutofillHints.familyName],
-                      validator: (value) {
-                        return value.length < 3 ? "Veuillez entrer un nom valide.": null;
-                      }),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Email*', hintText: "jean.dupont@gmail.com"),
-                    controller: emailInputController,
-                    autofillHints: [AutofillHints.email],
-                    keyboardType: TextInputType.emailAddress,
-                    validator: emailValidator,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Mot de passe*', hintText: "********"),
-                    controller: pwdInputController,
-                    autofillHints: [AutofillHints.newPassword],
-                    obscureText: true,
-                    validator: pwdValidator,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Confirmation du mot de passe*', hintText: "********"),
-                    controller: confirmPwdInputController,
-                    autofillHints: [AutofillHints.newPassword],
-                    obscureText: true,
-                    validator: pwdValidator,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: SwitchListTile(
-                      activeColor: Theme.of(context).accentColor,
-                      title: Text("J'accepte l'utilisation de mes données à des fins de personnalisation de l'experience utilisateur.",
-                      style: TextStyle(fontSize: 12.0)),
-                      value: acceptRGPD,
-                      onChanged: (bool value) {setState(() {acceptRGPD = value;});},
-                      controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 20.0),
-                    child: RaisedButton(
-                      child: Text("S'inscrire"),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        if (_registerFormKey.currentState.validate()) {
-                          if (pwdInputController.text == confirmPwdInputController.text) {
-                            if(acceptRGPD) {
-                              FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
-                                  email: emailInputController.text,
-                                  password: pwdInputController.text)
-                                  .then((authResult) =>
-                                  FirebaseFirestore.instance
-                                      .collection("users")
-                                      .doc(authResult.user.uid)
-                                      .set({
-                                    "uid": authResult.user.uid,
-                                    "fname": firstNameInputController.text,
-                                    "surname": lastNameInputController.text,
-                                    "email": emailInputController.text,
-                                  })
-                                      .then((result) =>
-                                  {
-                                    firstNameInputController.clear(),
-                                    lastNameInputController.clear(),
-                                    emailInputController.clear(),
-                                    pwdInputController.clear(),
-                                    confirmPwdInputController.clear()
-                                  })
-                                      .then((value) => _saveDeviceToken())
-                                      .catchError((err) => print(err)))
-                                  .catchError((err) => print(err));
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Vous devez accepter l'utilisation de vos données pour vous inscrire",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: getPink(),
-                                  textColor: Colors.white,
-                                  fontSize: 16.0
-                              );
+                  key: _registerFormKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                            labelText: 'Prénom*', hintText: "Jean"),
+                        controller: firstNameInputController,
+                        autofillHints: [
+                          AutofillHints.givenName,
+                          AutofillHints.name
+                        ],
+                        validator: (value) {
+                          return value.length < 3
+                              ? "Veuillez entrer un nom valide."
+                              : null;
+                        },
+                      ),
+                      TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Nom de famille*', hintText: "Dupont"),
+                          controller: lastNameInputController,
+                          autofillHints: [AutofillHints.familyName],
+                          validator: (value) {
+                            return value.length < 3
+                                ? "Veuillez entrer un nom valide."
+                                : null;
+                          }),
+                      TextFormField(
+                        decoration: InputDecoration(
+                            labelText: 'Email*',
+                            hintText: "jean.dupont@gmail.com"),
+                        controller: emailInputController,
+                        autofillHints: [AutofillHints.email],
+                        keyboardType: TextInputType.emailAddress,
+                        validator: emailValidator,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                            labelText: 'Mot de passe*', hintText: "********"),
+                        controller: pwdInputController,
+                        autofillHints: [AutofillHints.newPassword],
+                        obscureText: true,
+                        validator: pwdValidator,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                            labelText: 'Confirmation du mot de passe*',
+                            hintText: "********"),
+                        controller: confirmPwdInputController,
+                        autofillHints: [AutofillHints.newPassword],
+                        obscureText: true,
+                        validator: pwdValidator,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: SwitchListTile(
+                          activeColor: Theme
+                              .of(context)
+                              .primaryColor,
+                          title: Text(
+                              "J'accepte l'utilisation de mes données à des fins de personnalisation de l'experience utilisateur.",
+                              style: TextStyle(fontSize: 12.0)),
+                          value: acceptRGPD,
+                          onChanged: (bool value) {
+                            setState(() {
+                              acceptRGPD = value;
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity
+                              .leading, //  <-- leading Checkbox
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 20.0),
+                        child: waiting ? Load(100) : RaisedButton(
+                            child: Text("S'inscrire"),
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
+                            textColor: Colors.white,
+                            onPressed: () {
+                              registerUser();
                             }
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Erreur"),
-                                    content: Text("Les mot de passe ne correspondent pas, veuillez réessayer."),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text("Close"),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      )
-                                    ],
-                                  );
-                                });
-                          }
-                        }
-                      },
-                    ),
+                        ),
+                      ),
+                      Text("Vous avez déjà un compte ?"),
+                      FlatButton(
+                        child: Text("Connectez-vous ici !",
+                          style: TextStyle(fontWeight: FontWeight.bold),),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
                   ),
-                  Text("Vous avez déjà un compte ?"),
-                  FlatButton(
-                    child: Text("Connectez-vous ici !", style: TextStyle(fontWeight: FontWeight.bold),),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ))));
+                ))));
+  }
+
+  void registerUser() async {
+    setState(() {
+      waiting = true;
+    });
+    if (_registerFormKey.currentState.validate()) {
+      if (pwdInputController.text != confirmPwdInputController.text) {
+        showDialog(context: context, builder: (BuildContext context) {
+          return AlertDialog(title: Text("Erreur"),
+            content: Text(
+                "Les mot de passe ne correspondent pas, veuillez réessayer."),
+            actions: <Widget>[ FlatButton(child: Text("Ok"), onPressed: () {
+              Navigator.of(context).pop();
+            },)
+            ],);
+        });
+        setState(() {
+          waiting = false;
+        });
+        pwdInputController.clear();
+        confirmPwdInputController.clear();
+        return;
+      }
+      if (!acceptRGPD) {
+        showDialog(context: context, builder: (BuildContext context) {
+          return AlertDialog(title: Text("Erreur"),
+            content: Text(
+                "Vous devez accepter l'utilisation de vos données pour vous inscrire."),
+            actions: <Widget>[ FlatButton(child: Text("Ok"), onPressed: () {
+              Navigator.of(context).pop();
+            },)
+            ],);
+        });
+        setState(() {
+          waiting = false;
+        });
+        return;
+      }
+      try {
+        var authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailInputController.text,password: pwdInputController.text);
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(authResult.user.uid)
+            .set({
+          "uid": authResult.user.uid,
+          "fname": firstNameInputController.text,
+          "surname": lastNameInputController.text,
+          "email": emailInputController.text,
+        });
+      }
+      catch(platformExceptionToFirebaseAuthException) {
+        showDialog(context: context, builder: (BuildContext context) {
+          return AlertDialog(title: Text("Erreur"),
+            content: Text(
+                "Une erreur s'est produite, veuillez vérifier qu'un compte n'existe pas déjà avec cette adresse mail ou rééssayez plus tard."),
+            actions: <Widget>[ FlatButton(child: Text("Ok"), onPressed: () {
+              Navigator.of(context).pop();
+            },)
+            ],);
+        });
+        setState(() {
+          waiting = false;
+        });
+        return;
+      }
+      firstNameInputController.clear();
+      lastNameInputController.clear();
+      emailInputController.clear();
+      pwdInputController.clear();
+      confirmPwdInputController.clear();
+      _saveDeviceToken();
+    }
   }
 }
 

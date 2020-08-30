@@ -43,6 +43,7 @@ Future<Widget> getLandingPage() async {
         _updateCurrentUserInfo();
         return NewsPage();
       }
+      print("User is not connected");
       return LoginPage();
     },
   );

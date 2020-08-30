@@ -5,7 +5,6 @@ import 'module/calculator/calculator_view.dart';
 import 'module/cloudstorage/upload_download_view.dart';
 import 'module/downloadapp/downloadappdesktop_view.dart';
 import 'module/periodictable/periodictable_view.dart';
-import 'package:waha/routes/Routes.dart';
 import 'data/colors.dart';
 import 'module/auth/register.dart';
 import 'module/auth/splash.dart';
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(),
         primaryColor: getPink(),
-        accentColor: Colors.black87,
+        accentColor: getPink(),
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
@@ -75,21 +74,21 @@ class MyApp extends StatelessWidget {
           darkTheme: darkTheme,
           home: SplashPage(),
           routes: <String, WidgetBuilder>{
-            Routes.splash: (context) => SplashPage(),
-            Routes.login: (context) => LoginPage(),
-            Routes.register: (context) => RegisterPage(),
-            Routes.news: (context) => NewsPage(),
-            Routes.schedule: (context) => SchedulePage(),
-            Routes.notes: (context) => NotesPage(),
-            Routes.editnote: (context) => EditNotePage(),
-            Routes.periodictable: (context) => PeriodicTablePage(),
-            Routes.calculator: (context) => CalculatorPage(),
-            Routes.cloudupload: (context) => UploadPage(),
-            Routes.clouddownload: (context) => DownloadPage(),
-            Routes.food: (context) => FoodPage(),
-            Routes.bugreport: (context) => BugreportPage(),
-            Routes.downloadapp: (context) => DownloadAppPage(),
-            Routes.downloadappdesktop: (context) => DownloadAppDesktopPage(),
+            "/splash": (context) => SplashPage(),
+            "/login": (context) => LoginPage(),
+            "/register": (context) => RegisterPage(),
+            "/news": (context) => NewsPage(),
+            "/schedule": (context) => SchedulePage(),
+            "/notes": (context) => NotesPage(),
+            "/editnote": (context) => EditNotePage(),
+            "/periodictable": (context) => PeriodicTablePage(),
+            "/calculator": (context) => CalculatorPage(),
+            "/cloudupload": (context) => UploadPage(),
+            "/clouddownload": (context) => DownloadPage(),
+            "/food": (context) => FoodPage(),
+            "/bugreport": (context) => BugreportPage(),
+            "/downloadapp": (context) => DownloadAppPage(),
+            "/downloadappdesktop": (context) => DownloadAppDesktopPage(),
           }),
     );
   }

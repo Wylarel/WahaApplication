@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:waha/data/colors.dart';
 import 'package:waha/widget/appbar.dart';
@@ -81,8 +82,8 @@ class DetailPage extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
 
       appBar: AppBar(
-        backgroundColor: Color.lerp(Theme.of(context).appBarTheme.color, element.colors[1], 0),
-        bottom: ElementTile(element, isLarge: true),),
+        bottom: ElementTile(element, isLarge: true),
+      ),
 
       body: ListView(padding: EdgeInsets.only(top: 24.0), children: listItems),
     );
@@ -128,7 +129,7 @@ class ElementTile extends StatelessWidget implements PreferredSizeWidget {
       tag: 'hero-${element.symbol}',
       flightShuttleBuilder: (_, anim, __, ___, ____) =>
           ScaleTransition(scale: anim.drive(Tween(begin: 1, end: 1.75)), child: tile),
-      child: Transform.scale(scale: isLarge ? 1.75 : 1, child: tile),
+      child: Transform.translate(offset: isLarge && kIsWeb ? Offset(0.0, -(kContentSize-22.5)) : Offset.zero, child: Transform.scale(scale: isLarge ? 1.75 : 1, child: tile)),
     );
   }
 }

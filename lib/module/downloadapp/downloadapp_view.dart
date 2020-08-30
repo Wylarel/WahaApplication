@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:waha/routes/Routes.dart';
 import 'package:waha/widget/appbar.dart';
 import 'package:waha/widget/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,7 +24,7 @@ class DownloadAppPage extends StatelessWidget {
                   textAlign: TextAlign.center,),
               ),
               FlatButton(
-                onPressed: () {Navigator.pushReplacementNamed(context, Routes.downloadappdesktop);},
+                onPressed: () {Navigator.pushReplacementNamed(context, "/downloadappdesktop");},
                 color: Colors.redAccent,
                 textColor: Colors.white,
                 child: Padding(

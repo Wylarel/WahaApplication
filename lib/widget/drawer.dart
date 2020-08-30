@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waha/module/auth/login.dart';
+import 'package:waha/module/auth/splash.dart';
 import 'package:waha/module/bugreport/bugreport_view.dart';
 import 'package:waha/module/calculator/calculator_view.dart';
 import 'package:waha/module/cloudstorage/upload_download_view.dart';
+import 'package:waha/module/dictionary/dictionary_view.dart';
 import 'package:waha/module/downloadapp/downloadapp_view.dart';
 import 'package:waha/module/food/food_view.dart';
 import 'package:waha/module/news/news_view.dart';
@@ -56,17 +57,6 @@ class _AppDrawerState extends State<AppDrawer> {
                   Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: NotesPage()))),
           Divider(),
           _createDrawerItem(
-              icon: FontAwesomeIcons.atom,
-              text: 'Tableau périodique',
-              onTap: () =>
-                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: PeriodicTablePage()))),
-          _createDrawerItem(
-              icon: FontAwesomeIcons.calculator,
-              text: 'Calculatrice',
-              onTap: () =>
-                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: CalculatorPage()))),
-          Divider(),
-          _createDrawerItem(
               icon: Icons.file_upload,
               text: 'Envoyer un fichier',
               onTap: () =>
@@ -76,6 +66,22 @@ class _AppDrawerState extends State<AppDrawer> {
               text: 'Recevoir un fichier',
               onTap: () =>
                   Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: DownloadPage(isGuest: false)))),
+          Divider(),
+          _createDrawerItem(
+              icon: FontAwesomeIcons.atom,
+              text: 'Tableau périodique',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: PeriodicTablePage()))),
+          _createDrawerItem(
+              icon: FontAwesomeIcons.calculator,
+              text: 'Calculatrice',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: CalculatorPage()))),
+          _createDrawerItem(
+              icon: FontAwesomeIcons.spellCheck,
+              text: 'Dictionnaire',
+              onTap: () =>
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: DictionaryPage()))),
           Divider(),
           _createDrawerItem(
               icon: Icons.fastfood,
@@ -99,7 +105,7 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () => FirebaseAuth.instance
                   .signOut()
                   .then((result) =>
-                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: LoginPage())))
+                  Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeftWithFade, child: SplashPage())))
                   .catchError((err) => print(err))),
           SwitchListTile(
             title: Text("Theme sombre"),
@@ -146,9 +152,9 @@ class _AppDrawerState extends State<AppDrawer> {
     return ListTile(
       title: Row(
         children: <Widget>[
-          FaIcon(icon),
+          Icon(icon),
           Padding(
-            padding: EdgeInsets.only(left: 8.0),
+            padding: EdgeInsets.only(left: 12.0),
             child: Text(text),
           )
         ],
@@ -165,7 +171,7 @@ class UserDisplayNameText extends StatefulWidget {
 
 class _UserDisplayNameTextState extends State<UserDisplayNameText> {
   Widget build(BuildContext context) {
-    return Text("${CurrentUserInfo.displayName}",
+    return Text("${CurrentUserInfo.displayName != null ? CurrentUserInfo.displayName : ""}",
         style: TextStyle(
             color: Theme.of(context).brightness == Brightness.light ? Colors.white : Theme.of(context).accentColor,
             fontSize: 20.0,
@@ -176,5 +182,26 @@ class _UserDisplayNameTextState extends State<UserDisplayNameText> {
 
   void initState() {
     super.initState();
+  }
+}
+
+class CustomDivider extends StatelessWidget {
+  final String dividerText;
+
+  CustomDivider({Key key, @required this.dividerText}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      Expanded(child: Divider()),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(dividerText, style: TextStyle(
+            color: Color.lerp(Theme.of(context).textTheme.bodyText1.color, Colors.transparent, .6),
+            fontSize: 13.0,
+          ),
+        ),
+      ),
+      Expanded(child: Divider()),
+    ]);
   }
 }

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:waha/data/colors.dart';
-import 'package:waha/routes/Routes.dart';
 import 'package:waha/widget/appbar.dart';
 import 'package:waha/widget/drawer.dart';
 import 'dart:math';
@@ -25,7 +25,7 @@ class NotesPage extends StatelessWidget {
         onPressed: () {
           newNote(context);
         },
-        child: Icon(Icons.add, color: Theme.of(context).textTheme.bodyText1.color,),
+        child: Icon(Icons.add, color: Colors.white),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
@@ -36,7 +36,7 @@ class NotesPage extends StatelessWidget {
 
     FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).set({"text": ""});
     print("Created note " + currentNoteId);
-    Navigator.pushReplacementNamed(context, Routes.editnote);
+    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: EditNotePage()));
   }
 }
 
@@ -106,7 +106,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   void openNote(String id) {
     currentNoteId = id;
-    Navigator.pushReplacementNamed(context, Routes.editnote);
+    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: EditNotePage()));
   }
 
   void deleteNote(String id) {
@@ -135,6 +135,7 @@ class EditNotePage extends StatelessWidget {
       appBar: AppBar(
           title: Text("Modifier une note"),
           backgroundColor: getPink(),
+          automaticallyImplyLeading: false,
           actions: <Widget>[
             // action button
             IconButton(
@@ -155,7 +156,7 @@ class EditNotePage extends StatelessWidget {
     else
       FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).delete();
 
-    Navigator.pushReplacementNamed(context, Routes.notes);
+    Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: NotesPage()));
   }
 }
 

@@ -35,6 +35,19 @@ class _NewsListWidgetState extends State<NewsListWidget> {
     }
     else {
       List<Widget> newsWidgets = new List<Widget>();
+      newsWidgets.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6.0),
+            child: RaisedButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: () {Scaffold.of(context).openDrawer();},
+              textColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [FaIcon(FontAwesomeIcons.arrowLeft), Container(width: 14.0), Text("Ouvrir le menu", style: TextStyle(fontSize: 18.0))],),
+            ),),
+          )
+      );
       _fetchedNews.forEach((newsItem) {
         newsWidgets.add(Card(
           child: Padding(

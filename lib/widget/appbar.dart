@@ -1,8 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:waha/data/colors.dart';
-import 'package:waha/routes/Routes.dart';
-import 'package:waha/static/CurrentUserInfo.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String name;
