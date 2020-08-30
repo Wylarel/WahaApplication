@@ -1,4 +1,4 @@
-<img src="https://wahadl.web.app/ressources/img/repoheader.png" alt="Waha App Banner" width="200px">
+[<img src="https://wahadl.web.app/ressources/img/repoheader.png" alt="Waha App Banner" width="200px">](https://wahadl.web.app/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://wylarel.com/mit/)
 [![Discord](https://img.shields.io/badge/Chat-Discord-blue)](https://discord.gg/7qvmeh2)
