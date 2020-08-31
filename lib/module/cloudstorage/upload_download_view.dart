@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:waha/widget/appbar.dart';
@@ -13,6 +15,7 @@ import 'package:waha/widget/drawer.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:confetti/confetti.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waha/widget/load.dart';
@@ -308,6 +311,10 @@ class _CodeInputWidgetState extends State<CodeInputWidget> {
 
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
+    WidgetsFlutterBinding.ensureInitialized();
+    FlutterDownloader.initialize(
+        debug: true // optional: set false to disable printing logs to console
+    );
     super.initState();
   }
 
@@ -346,7 +353,15 @@ class _CodeInputWidgetState extends State<CodeInputWidget> {
     if(kIsWeb)
       await launch(downloadUrl);
     else {
-      await launch(downloadUrl);
+      Directory dlpath = await getExternalStorageDirectory();
+      print(dlpath.path);
+      final taskId = await FlutterDownloader.enqueue(
+        url: downloadUrl,
+        savedDir: dlpath.path,
+        showNotification: true, // show download progress in status bar (for Android)
+        openFileFromNotification: true, // click on notification to open downloaded file (for Android)
+      );
+      print(taskId);
     }
   }
 }

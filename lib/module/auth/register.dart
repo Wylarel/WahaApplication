@@ -66,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: <Widget>[
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'Prénom*', hintText: "Jean"),
+                            labelText: 'Prénom*', hintText: "Entrez votre prénom"),
                         controller: firstNameInputController,
                         autofillHints: [
                           AutofillHints.givenName,
@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       TextFormField(
                           decoration: InputDecoration(
-                              labelText: 'Nom de famille*', hintText: "Dupont"),
+                              labelText: 'Nom de famille*', hintText: "Entrez votre nom de famille"),
                           controller: lastNameInputController,
                           autofillHints: [AutofillHints.familyName],
                           validator: (value) {
@@ -91,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                         decoration: InputDecoration(
                             labelText: 'Email*',
-                            hintText: "jean.dupont@gmail.com"),
+                            hintText: "Entrez votre email"),
                         controller: emailInputController,
                         autofillHints: [AutofillHints.email],
                         keyboardType: TextInputType.emailAddress,
@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       TextFormField(
                         decoration: InputDecoration(
-                            labelText: 'Mot de passe*', hintText: "********"),
+                            labelText: 'Mot de passe*', hintText: "Entrez un mot de passe unique"),
                         controller: pwdInputController,
                         autofillHints: [AutofillHints.newPassword],
                         obscureText: true,
@@ -108,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                         decoration: InputDecoration(
                             labelText: 'Confirmation du mot de passe*',
-                            hintText: "********"),
+                            hintText: "Confirmez le mot de passe"),
                         controller: confirmPwdInputController,
                         autofillHints: [AutofillHints.newPassword],
                         obscureText: true,

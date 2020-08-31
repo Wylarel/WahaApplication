@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextFormField(
                 decoration: InputDecoration(
-                    labelText: 'Mot de passe*', hintText: "********"),
+                    labelText: 'Mot de passe*', hintText: "Entre votre mot de passe"),
                 controller: pwdInputController,
                 autofillHints: [AutofillHints.password],
                 obscureText: true,
@@ -89,8 +89,9 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   Text("Vous n'avez pas encore de compte ?"),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
                       children: [
                         FlatButton(
                           color: Theme.of(context).cardColor,
