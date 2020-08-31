@@ -8,6 +8,13 @@
 L'application Waha permet à tout les élèves de recevoir leurs horaires syncronisés en direct et les dernières nouvelles de l'école. Elle donne également accès des utilitaires tels que des prises de notes syncronisées sur tout les appareils, un cloud gratuit et sans limite, un tableau périodique interractif, un dictionnaire avec plus de 500.000 définitions, ou une calculatrice scientifique, tout ça intégré directement dans une seule et même application.
 
 Elle a pour but de simplifier la vie étudiante et administrative pour tous. Développé en open-source par et pour les étudiants.
+<br><br>
+[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_01.png" alt="Waha App Screenshot" width="150px">](https://wahadl.web.app/)
+[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_02.png" alt="Waha App Screenshot" width="150px">](https://wahadl.web.app/)
+[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_03.png" alt="Waha App Screenshot" width="150px">](https://wahadl.web.app/)
+[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_04.png" alt="Waha App Screenshot" width="150px">](https://wahadl.web.app/)
+[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_05.png" alt="Waha App Screenshot" width="150px">](https://wahadl.web.app/)
+[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_06.png" alt="Waha App Screenshot" width="150px">](https://wahadl.web.app/)
 
 ## <span>&#x1F1EC;&#x1F1E7;</span> A mobile app for the students of the Athénée de Waha
 The Waha application allows all students to receive their live synchronized schedules and the latest news from the school. It also provides access to utilities such as synchronized note-taking on all devices, a free and unlimited cloud, an interractive periodic table, a dictionary with more than 500,000 definitions, or a scientific calculator, all integrated directly into a single application.
