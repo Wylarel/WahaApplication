@@ -9,12 +9,12 @@ L'application Waha permet à tout les élèves de recevoir leurs horaires syncro
 
 Elle a pour but de simplifier la vie étudiante et administrative pour tous. Développé en open-source par et pour les étudiants.
 <br><br>
-[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_01.png" alt="Waha App Screenshot" width="100px">](https://wahadl.web.app/)
-[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_02.png" alt="Waha App Screenshot" width="100px">](https://wahadl.web.app/)
-[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_03.png" alt="Waha App Screenshot" width="100px">](https://wahadl.web.app/)
-[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_04.png" alt="Waha App Screenshot" width="100px">](https://wahadl.web.app/)
-[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_05.png" alt="Waha App Screenshot" width="100px">](https://wahadl.web.app/)
-[<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_06.png" alt="Waha App Screenshot" width="100px">](https://wahadl.web.app/)
+<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_01.png" alt="Waha App Screenshot" width="100px">
+<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_02.png" alt="Waha App Screenshot" width="100px">
+<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_03.png" alt="Waha App Screenshot" width="100px">
+<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_04.png" alt="Waha App Screenshot" width="100px">
+<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_05.png" alt="Waha App Screenshot" width="100px">
+<img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_06.png" alt="Waha App Screenshot" width="100px">
 
 ## <span>&#x1F1EC;&#x1F1E7;</span> A mobile app for the students of the Athénée de Waha
 The Waha application allows all students to receive their live synchronized schedules and the latest news from the school. It also provides access to utilities such as synchronized note-taking on all devices, a free and unlimited cloud, an interractive periodic table, a dictionary with more than 500,000 definitions, or a scientific calculator, all integrated directly into a single application.
