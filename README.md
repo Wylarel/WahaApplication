@@ -6,7 +6,7 @@
 [![Use the Web Version](https://img.shields.io/badge/Use%20the-Web%20version-%23fb0085)](https://wahadl.web.app/)
 [![Download on the Play Store](https://img.shields.io/badge/Download%20on%20the-Play%20Store-%23fb0085)](https://play.google.com/store/apps/details?id=com.wylarel.waha)
 
-## <img src="http://www.flags.net/images/smallflags/FRAN0001.GIF" height="17px"> Une application mobile pour les étudiants de l'Athénée de Waha
+## <img src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/fr.svg" height="17px"> Une application mobile pour les étudiants de l'Athénée de Waha
 L'application Waha permet à tout les élèves de l'Athénée de Waha de, en quelques secondes:
 - Recevoir en direct leurs horaires personnels et tout ses changements
 - Transférer une quantité illimitée de fichiers vers le cloud de l'école et les récupérer n'importe où
@@ -44,13 +44,16 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
   À l'exception de ce qui est indiqué dans le présent avis, le nom Wylarel ne doit pas être utilisé dans la publicité ou autrement pour promouvoir la vente, l'utilisation ou d'autres transactions dans ce logiciel sans autorisation écrite préalable de Wylarel.
 </details>
 
-## <img src="http://www.flags.net/images/smallflags/UNKG0001.GIF" height="17px"> A mobile app for the students of the Athénée de Waha
+## <img src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg" height="17px"> A mobile app for the students of the Athénée de Waha
 The Waha application allows all students of the Athénée de Waha to, in a few seconds:
 - Receive live their personal schedule and all its changes
 - Transfer an unlimited amount of files to the school cloud and retrieve them anywhere
 - Take synchronized notes on all their devices
 - Have access to more than 500,000 definitions thanks to the Wiktionary
 - Order directly and easily from several local sandwich shops and restaurants
+
+### Translation
+This document has not been translated in its entirety because the target audience is almost exclusively French-speaking. Feel free to [contact me](https://www.wylarel.com/) if you have any questions.
 
 ### License
 <details>
