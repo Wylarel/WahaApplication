@@ -3,7 +3,7 @@ description: A mobile app for the students of the Athénée de Waha
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+4
+version: 1.0.1+0
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -34,6 +34,7 @@ dependencies:
   page_transition: ^1.1.6
   confetti: ^0.5.4+1
   wave: ^0.0.8
+  split_view: ^1.0.1
 
   shared_preferences: ^0.5.3+4
   adaptive_theme: ^1.0.0
