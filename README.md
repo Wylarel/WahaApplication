@@ -28,6 +28,7 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 - [x] Rajouter le lien Google Play dans "Télécharger l'app"
 - [ ] Rajouter une trace de l'utilisateur qui a upload le fichier dans la base de donnée
 - [ ] Rajouter un historique de fichier envoyés dans le front end
+- [ ] Trier les notes par dates de modification
 - [ ] Améliorer les messages d'erreur de la page de connexion et d'inscription
 - [ ] Améliorer le design de la page de connexion et d'inscription
 - [ ] Intégrer tawk.to sur mobile
