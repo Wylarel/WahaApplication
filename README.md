@@ -6,7 +6,7 @@
 [![Use the Web Version](https://img.shields.io/badge/Use%20the-Web%20version-%23fb0085)](https://wahadl.web.app/)
 [![Download on the Play Store](https://img.shields.io/badge/Download%20on%20the-Play%20Store-%23fb0085)](https://play.google.com/store/apps/details?id=com.wylarel.waha)
 
-## <span>&#x1F1EB;&#x1F1F7;</span> Une application mobile pour les étudiants de l'Athénée de Waha
+## <img src="http://www.flags.net/images/smallflags/FRAN0001.GIF" height="17px"> Une application mobile pour les étudiants de l'Athénée de Waha
 L'application Waha permet à tout les élèves de l'Athénée de Waha de, en quelques secondes:
 - Recevoir en direct leurs horaires personnels et tout ses changements
 - Transférer une quantité illimitée de fichiers vers le cloud de l'école et les récupérer n'importe où
@@ -23,7 +23,18 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 <img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_05.png" alt="Waha App Screenshot" width="100px">
 <img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_06.png" alt="Waha App Screenshot" width="100px">
 
-## <span>&#x1F1EC;&#x1F1E7;</span> A mobile app for the students of the Athénée de Waha
-The Waha application allows all students to receive their live synchronized schedules and the latest news from the school. It also provides access to utilities such as synchronized note-taking on all devices, a free and unlimited cloud, an interractive periodic table, a dictionary with more than 500,000 definitions, or a scientific calculator, all integrated directly into a single application.
+### Bugs & Todo
+- [x] Rajouter un message d'erreur quand l'utilisateur n'est pas connecté à internet et essaye de s'inscrire
+- [x] Rajouter le lien Google Play dans "Télécharger l'app"
+- [ ] Rajouter une trace de l'utilisateur qui a upload le fichier dans la base de donnée
+- [ ] Rajouter un historique de fichier envoyés dans le front end
+- [ ] Améliorer les messages d'erreur de la page de connexion et d'inscription
+- [ ] Améliorer le design de la page de connexion et d'inscription
 
-It aims to simplify student and administrative life for everyone. Developed in open-source by and for students.
+## <img src="http://www.flags.net/images/smallflags/UNKG0001.GIF" height="17px"> A mobile app for the students of the Athénée de Waha
+The Waha application allows all students of the Athénée de Waha to, in a few seconds:
+- Receive live their personal schedule and all its changes
+- Transfer an unlimited amount of files to the school cloud and retrieve them anywhere
+- Take synchronized notes on all their devices
+- Have access to more than 500,000 definitions thanks to the Wiktionary
+- Order directly and easily from several local sandwich shops and restaurants
