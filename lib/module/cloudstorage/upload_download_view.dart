@@ -17,7 +17,6 @@ import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:confetti/confetti.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:split_view/split_view.dart';
 import 'package:intl/intl.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -422,10 +421,6 @@ class _CodeInputWidgetState extends State<CodeInputWidget> {
 
   void initState() {
     errorController = StreamController<ErrorAnimationType>();
-    WidgetsFlutterBinding.ensureInitialized();
-    FlutterDownloader.initialize(
-        debug: true // optional: set false to disable printing logs to console
-    );
     super.initState();
   }
 
@@ -465,7 +460,7 @@ class _CodeInputWidgetState extends State<CodeInputWidget> {
       await launch(downloadUrl);
     else {
       await launch(downloadUrl);
-      return;
+      /*
       Directory dlpath = await getExternalStorageDirectory();
       print(dlpath.path);
       final taskId = await FlutterDownloader.enqueue(
@@ -475,6 +470,7 @@ class _CodeInputWidgetState extends State<CodeInputWidget> {
         openFileFromNotification: true, // click on notification to open downloaded file (for Android)
       );
       print(taskId);
+      */
     }
   }
 }
