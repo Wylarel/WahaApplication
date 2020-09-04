@@ -30,6 +30,7 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 - [ ] Rajouter un historique de fichier envoyés dans le front end
 - [ ] Améliorer les messages d'erreur de la page de connexion et d'inscription
 - [ ] Améliorer le design de la page de connexion et d'inscription
+- [ ] Intégrer tawk.to sur mobile
 
 ### License
 <details>
