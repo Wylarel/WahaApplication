@@ -36,6 +36,7 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 <details>
   <summary>License MIT</summary>
   Copyright © 2020, Wylarel
+
   L'autorisation est par les présentes accordée, à titre gratuit, à toute personne obtenant une copie de ce logiciel et des fichiers de documentation associés (le "Logiciel"), d'utiliser le Logiciel sans restriction, y compris, sans limitation, les droits d'utilisation, de copie, de modification, de fusion, de publication, de distribution, de sous-licence et/ou de vente de copies du Logiciel, et d'autoriser les personnes à qui le Logiciel est fourni à le faire, sous réserve des conditions suivantes :
 
   L'avis de droit d'auteur ci-dessus et le présent avis d'autorisation doivent être inclus dans toutes les copies ou parties substantielles du Logiciel.
@@ -62,6 +63,7 @@ This document has not been translated in its entirety because the target audienc
 <details>
   <summary>MIT License</summary>
 Copyright © 2020, Wylarel
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
