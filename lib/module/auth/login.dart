@@ -138,8 +138,8 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           dialogType: DialogType.ERROR,
           animType: AnimType.BOTTOMSLIDE,
-          title: 'Mauvais identifiants',
-          desc: 'Votre mot de passe ou adresse email est incorrect, veuillez réessayer',
+          title: 'Une erreur s\'est produite',
+          desc: 'Vérifiez votre mot de passe ou adresse email. Si le problème persiste, pensez à vérifier que vous avez une connexion internet active.',
           btnCancelText: "Rééssayer",
           btnCancelOnPress: () {pwdInputController.text = "";},
         ).show();

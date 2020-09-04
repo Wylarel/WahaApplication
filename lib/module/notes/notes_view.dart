@@ -52,7 +52,7 @@ class _NoteListWidgetState extends State<NoteListWidget> {
   Widget build(BuildContext context) {
     List<Widget> noteListWidgets = new List<Widget>();
     noteMap.forEach((key, value) {
-      value = value.replaceAll("\n", "");
+      value = value.replaceAll(" \n", " ").replaceAll("\n ", " ").replaceAll("\n", " ");
       if(value.length > 200) {
         value = value.substring(0, 200) + "...";
       }
@@ -134,7 +134,6 @@ class EditNotePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: Text("Modifier une note"),
-          backgroundColor: getPink(),
           automaticallyImplyLeading: false,
           actions: <Widget>[
             // action button
@@ -174,7 +173,7 @@ class _EditNoteFieldWidgetState extends State<EditNoteFieldWidget> {
         controller: txt,
         decoration: InputDecoration(
           hintText: "Ecrivez votre note ici",
-          fillColor: Colors.white,
+          fillColor: Colors.transparent,
           filled: true,
           border: InputBorder.none,
         ),

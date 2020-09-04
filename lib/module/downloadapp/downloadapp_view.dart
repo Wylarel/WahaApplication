@@ -39,17 +39,11 @@ class DownloadAppPage extends StatelessWidget {
                     ],),
                 ),),
               Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Divider(),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: Text("Bientôt disponnible:", style: TextStyle(fontSize: 18.0),
-                  textAlign: TextAlign.center,),
+                padding: const EdgeInsets.all(6.0),
               ),
               FlatButton(
-                onPressed: () {},
-                color: Colors.greenAccent,
+                onPressed: () {_launchURL("https://play.google.com/store/apps/details?id=com.wylarel.waha");},
+                color: Colors.green,
                 textColor: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -63,7 +57,9 @@ class DownloadAppPage extends StatelessWidget {
                     ],),
                 ),),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 12.0, top: 24.0),
+                child: Text("Bientôt disponnible:", style: TextStyle(fontSize: 18.0),
+                  textAlign: TextAlign.center,),
               ),
               FlatButton(
                 onPressed: () {},

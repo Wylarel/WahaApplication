@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
         showDialog(context: context, builder: (BuildContext context) {
           return AlertDialog(title: Text("Erreur"),
             content: Text(
-                "Une erreur s'est produite, veuillez vérifier qu'un compte n'existe pas déjà avec cette adresse mail ou rééssayez plus tard."),
+                "Une erreur s'est produite, veuillez vérifier qu'un compte n'existe pas déjà avec cette adresse mail et que vous avez une connexion internet active."),
             actions: <Widget>[ FlatButton(child: Text("Ok"), onPressed: () {
               Navigator.of(context).pop();
             },)

@@ -87,7 +87,6 @@ class _SmsCommandWidgetState extends State<SmsCommandWidget> {
                     SizedBox(width: 10,),
                     Text(
                       restaurant.name,
-                      style:  TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
