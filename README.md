@@ -8,7 +8,7 @@
 
 ## <img src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/fr.svg" height="17px"> Une application mobile pour les étudiants de l'Athénée de Waha
 L'application Waha permet à tout les élèves de l'Athénée de Waha de, en quelques secondes:
-- Recevoir en direct leurs horaires personnels et tout ses changements
+- Recevoir en direct leurs horaires personnels et tout leurs changements
 - Transférer une quantité illimitée de fichiers vers le cloud de l'école et les récupérer n'importe où
 - Prendre des notes synchronisées sur tout leurs appareils
 - Avoir accès à plus de 500.000 définitions grace au Wiktionnaire
@@ -55,7 +55,7 @@ toutes copies ou parties substantielles du logiciel.
 
 ## <img src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg" height="17px"> A mobile app for the students of the Athénée de Waha
 The Waha application allows all students of the Athénée de Waha to, in a few seconds:
-- Receive live their personal schedule and all its changes
+- Receive live their personal schedule and all their changes
 - Transfer an unlimited amount of files to the school cloud and retrieve them anywhere
 - Take synchronized notes on all their devices
 - Have access to more than 500,000 definitions thanks to the Wiktionary
