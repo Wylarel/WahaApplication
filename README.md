@@ -52,6 +52,8 @@ The Waha application allows all students of the Athénée de Waha to, in a few s
 - Have access to more than 500,000 definitions thanks to the Wiktionary
 - Order directly and easily from several local sandwich shops and restaurants
 
+Its goal is to simplify student and administrative life for everyone. Developed in open-source by and for students.
+
 ### Translation
 This document has not been translated in its entirety because the target audience is almost exclusively French-speaking. Feel free to [contact me](https://www.wylarel.com/) if you have any questions.
 
