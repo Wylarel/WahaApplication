@@ -35,11 +35,17 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 ### License
 <details>
   <summary>License MIT</summary>
-  Copyright © 2020, Wylarel
+  <strong>Copyright © 2020, Wylarel</strong>
 
-  L'autorisation est par les présentes accordée, à titre gratuit, à toute personne obtenant une copie de ce logiciel et des fichiers de documentation associés (le "Logiciel"), d'utiliser le Logiciel sans restriction, y compris, sans limitation, les droits d'utilisation, de copie, de modification, de fusion, de publication, de distribution, de sous-licence et/ou de vente de copies du Logiciel, et d'autoriser les personnes à qui le Logiciel est fourni à le faire, sous réserve des conditions suivantes :
+  L’autorisation est accordée, gracieusement, à toute personne acquérant une copie
+de ce logiciel et des fichiers de documentation associés (le « logiciel »), de commercialiser
+le logiciel sans restriction, notamment les droits d’utiliser, de copier, de modifier,
+de fusionner, de publier, de distribuer, de sous-licencier et / ou de vendre des copies du logiciel,
+ainsi que d’autoriser les personnes auxquelles la logiciel est fournie à le faire,
+sous réserve des conditions suivantes :
 
-  L'avis de droit d'auteur ci-dessus et le présent avis d'autorisation doivent être inclus dans toutes les copies ou parties substantielles du Logiciel.
+  La déclaration de copyright ci-dessus et la présente autorisation doivent être incluses dans
+toutes copies ou parties substantielles du logiciel.
 
   Le logiciel est fourni "tel quel", sans garantie d'aucune sorte, expresse ou implicite, y compris, mais sans s'y limiter, les garanties de qualité marchande, d'adéquation à un usage particulier et de non-contrefaçon. En aucun cas, les auteurs ou les détenteurs de droits d'auteur X ne peuvent être tenus responsables de toute réclamation, dommage ou autre responsabilité, que ce soit dans le cadre d'une action contractuelle, délictuelle ou autre, découlant du logiciel ou de l'utilisation ou d'autres transactions du logiciel, ou en relation avec ceux-ci.
 
@@ -62,13 +68,13 @@ This document has not been translated in its entirety because the target audienc
 ### License
 <details>
   <summary>MIT License</summary>
-Copyright © 2020, Wylarel
+  <strong>Copyright © 2020, Wylarel</strong>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-The Software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders X be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the Software.
+  The Software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders X be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the Software.
 
-Except as contained in this notice, the name of Wylarel shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization from Wylarel.
+  Except as contained in this notice, the name of Wylarel shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization from Wylarel.
 </details>
