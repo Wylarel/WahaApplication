@@ -50,206 +50,180 @@ class _FilePickingWidgetState extends State<FilePickingWidget> {
   DropzoneViewController dropzoneController;
   ConfettiController confettiController;
   Color dropzoneColor = Colors.transparent;
-  List<UploadHistoryItem> historyItems = new List<UploadHistoryItem>();
-  bool isWaitingForHistory = true;
 
   Widget build(BuildContext context) {
-    List<Widget> historyItemsWidget = new List<Widget>();
-    historyItems.forEach((item) {
-      historyItemsWidget.add(
-        Opacity(
-          opacity: item.isValid ? 1 : .4,
-          child: ListTile(
-            leading: Icon(Icons.history, size: 36.0),
-            title: Text(item.code),
-            subtitle: Text(item.date),
-            onTap: item.isValid ?  () {_copyText(item.code, context);} : null,
-          ),
-        ),
-      );
-    });
-
     return Center(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: SplitView(
-            initialWeight: 0.5,
-            viewMode: SplitViewMode.Vertical,
-            view1: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  fileCode != "" ? Container() : MaterialButton(
-                    color: Theme
-                        .of(context)
-                        .primaryColor, textColor: Colors.white,
-                    child: Text(
-                      filePicked == null ? 'Choisir un fichier' : _getFileName(
-                          filePicked),
-                      textAlign: TextAlign.center,),
-                    onPressed: () {
-                      startPicker();
-                    },
-                  ),
-                  filePicked != null || !kIsWeb ? Container() : Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 25.0),
-                    child: Container(
-                      height: 100.0,
-                      width: 200.0,
-                      child: Stack(
-                          children: [DropzoneView(
-                            operation: DragOperation.copy,
-                            cursor: CursorType.grab,
-                            onCreated: (ctrl) =>
-                                setState(() {
-                                  dropzoneController = ctrl;
-                                  dropzoneColor = Theme
-                                      .of(context)
-                                      .primaryColor;
-                                }),
-                            onError: (ev) =>
-                                setState(() {
-                                  dropzoneColor = Theme
-                                      .of(context)
-                                      .primaryColor;
-                                }),
-                            onHover: () =>
-                                setState(() {
-                                  dropzoneColor = Theme
-                                      .of(context)
-                                      .accentColor;
-                                }),
-                            onDrop: (ev) =>
-                                setState(() {
-                                  dropzoneColor = Theme
-                                      .of(context)
-                                      .primaryColor;
-                                  filePicked = ev;
-                                }),
-                            onLeave: () =>
-                                setState(() {
-                                  dropzoneColor = Theme
-                                      .of(context)
-                                      .primaryColor;
-                                }),
-                          ),
-                            DottedBorder(
-                              color: dropzoneColor,
-                              radius: Radius.circular(16),
-                              dashPattern: [6, 3],
-                              strokeWidth: 2,
-                              child: Center(
-                                  child: Text("Ou glissez-déposez le ici")),
-                            ),
-                          ]
-                      ),
-                    ),
-                  ),
-                  fileCode != "" ? Container() : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      filePicked == null ? Container() : Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: MaterialButton(
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
-                          textColor: Colors.white,
-                          child: Text('Annuler'),
-                          onPressed: () {
-                            setState(() {
-                              filePicked = null;
-                            });
-                          },
-                        ),
-                      ),
-                      MaterialButton(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        disabledColor: Theme
-                            .of(context)
-                            .cardColor,
-                        textColor: Colors.white,
-                        child: Text('Envoyer'),
-                        onPressed: filePicked == null ? null : () {
-                          uploadFile(filePicked);
-                        },
-                      ),
-                    ],
-                  ),
-                  fileCode == "" ? Container() : Text(
-                      "Voici votre code, utilisez le pour télécharger votre fichier de n'importe où. Attention, les fichiers ne sont stockés que 15 jours.",
-                      textAlign: TextAlign.center
-                  ),
-                  fileCode == "" ? Container() : Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                fileCode != "" ? Container() : MaterialButton(
+                  color: Theme
+                      .of(context)
+                      .primaryColor, textColor: Colors.white,
+                  child: Text(
+                    filePicked == null ? 'Choisir un fichier' : _getFileName(
+                        filePicked),
+                    textAlign: TextAlign.center,),
+                  onPressed: () {
+                    startPicker();
+                  },
+                ),
+                filePicked != null || !kIsWeb ? Container() : Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 25.0),
+                  child: Container(
+                    height: 100.0,
+                    width: 200.0,
                     child: Stack(
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 14.0),
-                                  child: Text(
-                                    formatCode(fileCode), textAlign: TextAlign
-                                      .center,
-                                    style: TextStyle(fontSize: 30, color: Theme
-                                        .of(context)
-                                        .accentColor),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: FaIcon(FontAwesomeIcons.copy),
-                                  tooltip: 'Copier dans le presse-papier',
-                                  onPressed: () {
-                                    _copyText(formatCode(fileCode), context);
-                                  },
-                                )
-                              ]
-                          ),
-                          Center(
-                            child: ConfettiWidget(
-                              confettiController: confettiController,
-                              blastDirectionality: BlastDirectionality
-                                  .explosive,
-                              shouldLoop: false,
-                              colors: const [
-                                Colors.green,
-                                Colors.blue,
-                                Colors.pink,
-                                Colors.orange,
-                                Colors.purple
-                              ], // manually specify the colors to be used
-                            ),
+                        children: [DropzoneView(
+                          operation: DragOperation.copy,
+                          cursor: CursorType.grab,
+                          onCreated: (ctrl) =>
+                              setState(() {
+                                dropzoneController = ctrl;
+                                dropzoneColor = Theme
+                                    .of(context)
+                                    .primaryColor;
+                              }),
+                          onError: (ev) =>
+                              setState(() {
+                                dropzoneColor = Theme
+                                    .of(context)
+                                    .primaryColor;
+                              }),
+                          onHover: () =>
+                              setState(() {
+                                dropzoneColor = Theme
+                                    .of(context)
+                                    .accentColor;
+                              }),
+                          onDrop: (ev) =>
+                              setState(() {
+                                dropzoneColor = Theme
+                                    .of(context)
+                                    .primaryColor;
+                                filePicked = ev;
+                              }),
+                          onLeave: () =>
+                              setState(() {
+                                dropzoneColor = Theme
+                                    .of(context)
+                                    .primaryColor;
+                              }),
+                        ),
+                          DottedBorder(
+                            color: dropzoneColor,
+                            radius: Radius.circular(16),
+                            dashPattern: [6, 3],
+                            strokeWidth: 2,
+                            child: Center(
+                                child: Text("Ou glissez-déposez le ici")),
                           ),
                         ]
                     ),
                   ),
-                  fileCode == "" || !uploaded ? Container() : MaterialButton(
-                    color: Theme
-                        .of(context)
-                        .primaryColor, textColor: Colors.white,
-                    child: Text('Envoyer un autre fichier'),
-                    onPressed: () =>
-                        setState(() {
-                          filePicked = null;
-                          fileCode = "";
-                          uploaded = false;
-                        }),
+                ),
+                fileCode != "" ? Container() : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    filePicked == null ? Container() : Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: MaterialButton(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        textColor: Colors.white,
+                        child: Text('Annuler'),
+                        onPressed: () {
+                          setState(() {
+                            filePicked = null;
+                          });
+                        },
+                      ),
+                    ),
+                    MaterialButton(
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
+                      disabledColor: Theme
+                          .of(context)
+                          .cardColor,
+                      textColor: Colors.white,
+                      child: Text('Envoyer'),
+                      onPressed: filePicked == null ? null : () {
+                        uploadFile(filePicked);
+                      },
+                    ),
+                  ],
+                ),
+                fileCode == "" ? Container() : Text(
+                    "Voici votre code, utilisez le pour télécharger votre fichier de n'importe où. Attention, les fichiers ne sont stockés que 15 jours.",
+                    textAlign: TextAlign.center
+                ),
+                fileCode == "" ? Container() : Padding(
+                  padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+                  child: Stack(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 14.0),
+                                child: Text(
+                                  formatCode(fileCode), textAlign: TextAlign
+                                    .center,
+                                  style: TextStyle(fontSize: 30, color: Theme
+                                      .of(context)
+                                      .accentColor),
+                                ),
+                              ),
+                              IconButton(
+                                icon: FaIcon(FontAwesomeIcons.copy),
+                                tooltip: 'Copier dans le presse-papier',
+                                onPressed: () {
+                                  _copyText(formatCode(fileCode), context);
+                                },
+                              )
+                            ]
+                        ),
+                        Center(
+                          child: ConfettiWidget(
+                            confettiController: confettiController,
+                            blastDirectionality: BlastDirectionality
+                                .explosive,
+                            shouldLoop: false,
+                            colors: const [
+                              Colors.green,
+                              Colors.blue,
+                              Colors.pink,
+                              Colors.orange,
+                              Colors.purple
+                            ], // manually specify the colors to be used
+                          ),
+                        ),
+                      ]
                   ),
-                  fileCode == "" || uploaded ? Container() : Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text("Upload..."),
-                  ),
-                  fileCode == "" || uploaded ? Container() : Load(100),
-                ]
-            ),
-            view2: Card(
-              child: historyItemsWidget.length > 0 ? ListView(
-                children: historyItemsWidget
-              ) : Center(child: isWaitingForHistory ? Load(100) : Text("Vous n'avez pas encore d'historique de fichier ou n'êtes pas connecté à internet"))
-            ),
+                ),
+                fileCode == "" || !uploaded ? Container() : MaterialButton(
+                  color: Theme
+                      .of(context)
+                      .primaryColor, textColor: Colors.white,
+                  child: Text('Envoyer un autre fichier'),
+                  onPressed: () =>
+                      setState(() {
+                        filePicked = null;
+                        fileCode = "";
+                        uploaded = false;
+                      }),
+                ),
+                fileCode == "" || uploaded ? Container() : Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text("Upload..."),
+                ),
+                fileCode == "" || uploaded ? Container() : Load(100),
+              ]
           ),
         )
     );
@@ -258,7 +232,6 @@ class _FilePickingWidgetState extends State<FilePickingWidget> {
   void initState() {
     confettiController = ConfettiController(duration: const Duration(seconds: 2));
     super.initState();
-    updateHistory();
   }
 
   void startPicker() async {
@@ -285,35 +258,6 @@ class _FilePickingWidgetState extends State<FilePickingWidget> {
     firestore.collection('users').doc(CurrentUserInfo.uid).collection('cloudhistory').doc(fileCode).set({"dl": dlUrl, "date": new DateTime.now().toString(), "path": "$fileCode/$fileName", "name": "$fileName"});
     setState(() {uploaded = true;});
     confettiController.play();
-    updateHistory();
-  }
-
-  String formatCode(String s) {
-    var start = 0;
-    final strings = <String>[];
-    while (start < s.length) {
-      final end = start + 2;
-      strings.add(s.substring(start, end));
-      start = end;
-    }
-    return strings.join(' ');
-  }
-
-  void updateHistory() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference reference = firestore.collection('users').doc(CurrentUserInfo.uid).collection('cloudhistory');
-    QuerySnapshot snapshot = await reference.orderBy("date", descending: true).get();
-    List<UploadHistoryItem> newHistoryItems = new List<UploadHistoryItem>();
-    snapshot.docs.forEach((doc) {
-      final DateTime parsedDate = DateTime.parse(doc.data()["date"]);
-      final String formattedDate = DateFormat('dd/MM/yyy').format(parsedDate);
-      newHistoryItems.add(new UploadHistoryItem(formatCode(doc.id), formattedDate, DateTime.now().difference(parsedDate).inDays < 15));
-    });
-
-    setState(() {
-      historyItems = newHistoryItems;
-      isWaitingForHistory = false;
-    });
   }
 }
 
@@ -337,21 +281,97 @@ class DownloadPage extends StatelessWidget {
     return Scaffold(
         appBar: CustomAppBar("Recevoir un fichier", !isGuest),
         drawer: isGuest ? null : AppDrawer(),
-        body: Center(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:
-              [
-                Text("Entrez le code de téléchargement à 6 chiffres:"),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: CodeInputWidget(),
+        body:  isGuest ? DownloadFileBody() : Column(
+              children: <Widget>[
+                Expanded(
+                    child: DownloadFileBody()
+                ),
+                Divider(),
+                Expanded(
+                    child: UploadHistory()
                 ),
               ]
-          ),
-        )
+          )
     );
+  }
+}
+
+
+class DownloadFileBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:
+          [
+            Text("Entrez le code de téléchargement à 6 chiffres:"),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CodeInputWidget(),
+            ),
+          ]
+      ),
+    );
+  }
+}
+
+
+class UploadHistory extends StatefulWidget {
+  @override
+  _UploadHistoryState createState() => _UploadHistoryState();
+}
+
+class _UploadHistoryState extends State<UploadHistory> {
+  List<UploadHistoryItem> historyItems = new List<UploadHistoryItem>();
+  bool isWaitingForHistory = true;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> historyItemsWidget = new List<Widget>();
+    historyItems.forEach((item) {
+      historyItemsWidget.add(
+        Opacity(
+          opacity: item.isValid ? 1 : .4,
+          child: ListTile(
+            leading: Icon(Icons.history, size: 36.0),
+            title: Text(item.code),
+            subtitle: Text(item.date),
+            onTap: item.isValid ?  () {_copyText(item.code, context);} : null,
+          ),
+        ),
+      );
+    });
+
+    return Container(
+        child: historyItemsWidget.length > 0 ? ListView(
+            children: historyItemsWidget
+        ) : Center(child: isWaitingForHistory ? Load(100) : Text("Vous n'avez pas encore d'historique de fichier ou n'êtes pas connecté à internet"))
+    );
+  }
+
+  void updateHistory() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference reference = firestore.collection('users').doc(CurrentUserInfo.uid).collection('cloudhistory');
+    QuerySnapshot snapshot = await reference.orderBy("date", descending: true).get();
+    List<UploadHistoryItem> newHistoryItems = new List<UploadHistoryItem>();
+    snapshot.docs.forEach((doc) {
+      final DateTime parsedDate = DateTime.parse(doc.data()["date"]);
+      final String formattedDate = DateFormat('dd/MM/yyy').format(parsedDate);
+      newHistoryItems.add(new UploadHistoryItem(formatCode(doc.id), formattedDate, DateTime.now().difference(parsedDate).inDays < 15));
+    });
+
+    setState(() {
+      historyItems = newHistoryItems;
+      isWaitingForHistory = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateHistory();
   }
 }
 
@@ -444,6 +464,8 @@ class _CodeInputWidgetState extends State<CodeInputWidget> {
     if(kIsWeb)
       await launch(downloadUrl);
     else {
+      await launch(downloadUrl);
+      return;
       Directory dlpath = await getExternalStorageDirectory();
       print(dlpath.path);
       final taskId = await FlutterDownloader.enqueue(
@@ -478,4 +500,15 @@ void _copyText(String text, BuildContext context) async {
       textColor: Colors.white,
       fontSize: 16.0
   );
+}
+
+String formatCode(String s) {
+  var start = 0;
+  final strings = <String>[];
+  while (start < s.length) {
+    final end = start + 2;
+    strings.add(s.substring(start, end));
+    start = end;
+  }
+  return strings.join(' ');
 }
