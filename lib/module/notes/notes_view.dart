@@ -34,7 +34,9 @@ class NotesPage extends StatelessWidget {
   void newNote(BuildContext context) async {
     currentNoteId = String.fromCharCodes(new List.generate(32,(index){return new Random().nextInt(33)+89;}));
 
-    FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).set({"text": ""});
+    DocumentReference doc = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId);
+    doc.set({"text": "", "lastmodified": DateTime.now().toString()});
+
     print("Created note " + currentNoteId);
     Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: EditNotePage()));
   }
@@ -111,14 +113,14 @@ class _NoteListWidgetState extends State<NoteListWidget> {
 
   void deleteNote(String id) {
     currentNoteId = id;
-    FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).delete();
+    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).delete();
     updateNoteList();
   }
 
   Future<void> updateNoteList() async
   {
     Map<String, String> draftNoteMap = new Map<String, String>();
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").orderBy("lastmodified", descending: true).get();
     querySnapshot.docs.forEach((element) {
           draftNoteMap.putIfAbsent(
               element.id, () => element.data()["text"]);
@@ -151,9 +153,12 @@ class EditNotePage extends StatelessWidget {
   void saveNote(BuildContext context, String textToSave) async
   {
     if (textToSave.replaceAll(" ", "") != "")
-      FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).set({"text": textToSave});
+      await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).set({
+        "text": textToSave,
+        "lastmodified": DateTime.now().toString()
+      });
     else
-      FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).delete();
+      await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).delete();
 
     Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: NotesPage()));
   }
@@ -184,7 +189,7 @@ class _EditNoteFieldWidgetState extends State<EditNoteFieldWidget> {
   void initState() {
     super.initState();
     txt.text = "Chargement...";
-    FirebaseFirestore.instance.collection('notes').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).get().then((snapshot) =>
+    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).collection("notes").doc(currentNoteId).get().then((snapshot) =>
             txt.text = snapshot.data()["text"] != null ? snapshot.data()["text"] : ""
     );
   }

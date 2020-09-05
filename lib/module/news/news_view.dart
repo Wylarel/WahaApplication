@@ -4,18 +4,69 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:waha/widget/drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waha/widget/load.dart';
-import 'package:waha/widget/appbar.dart';
+import 'package:package_info/package_info.dart';
 
 
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar("Nouveautés", true),
+      appBar: AppBar(
+        title: Text("Nouveautés"),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: 'Ouvrir le menu',
+            );
+          },
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 14.0),
+            child: AppVersionText(),
+          )
+        ],
+      ),
       drawer: AppDrawer(),
-        body:
-          NewsListWidget(),
+      body:
+      NewsListWidget(),
     );
+  }
+}
+
+class AppVersionText extends StatefulWidget {
+  @override
+  _AppVersionTextState createState() => _AppVersionTextState();
+}
+
+class _AppVersionTextState extends State<AppVersionText> {
+  String version = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Text(
+          version,
+          style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400),
+        )
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateVersion();
+  }
+
+  void updateVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      version = "${packageInfo.version}+${packageInfo.buildNumber}";
+    });
   }
 }
 
