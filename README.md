@@ -36,23 +36,14 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 - [ ] Intégrer tawk.to sur mobile
 
 ### License
-<details>
-  <summary>License MIT</summary>
-  <strong>Copyright © 2020, Wylarel</strong>
+<details><summary>License MIT</summary>
+Copyright © 2020 Wylarel
 
-  L’autorisation est accordée, gracieusement, à toute personne acquérant une copie
-de ce logiciel et des fichiers de documentation associés (le « logiciel »), de commercialiser
-le logiciel sans restriction, notamment les droits d’utiliser, de copier, de modifier,
-de fusionner, de publier, de distribuer, de sous-licencier et / ou de vendre des copies du logiciel,
-ainsi que d’autoriser les personnes auxquelles la logiciel est fournie à le faire,
-sous réserve des conditions suivantes :
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-  La déclaration de copyright ci-dessus et la présente autorisation doivent être incluses dans
-toutes copies ou parties substantielles du logiciel.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-  Le logiciel est fourni "tel quel", sans garantie d'aucune sorte, expresse ou implicite, y compris, mais sans s'y limiter, les garanties de qualité marchande, d'adéquation à un usage particulier et de non-contrefaçon. En aucun cas, les auteurs ou les détenteurs de droits d'auteur X ne peuvent être tenus responsables de toute réclamation, dommage ou autre responsabilité, que ce soit dans le cadre d'une action contractuelle, délictuelle ou autre, découlant du logiciel ou de l'utilisation ou d'autres transactions du logiciel, ou en relation avec ceux-ci.
-
-  À l'exception de ce qui est indiqué dans le présent avis, le nom Wylarel ne doit pas être utilisé dans la publicité ou autrement pour promouvoir la vente, l'utilisation ou d'autres transactions dans ce logiciel sans autorisation écrite préalable de Wylarel.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </details>
 
 ## <img src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg" height="17px"> A mobile app for the students of the Athénée de Waha
@@ -69,15 +60,12 @@ Its goal is to simplify student and administrative life for everyone. Developed 
 This document has not been translated in its entirety because the target audience is almost exclusively French-speaking. Feel free to [contact me](https://www.wylarel.com/) if you have any questions.
 
 ### License
-<details>
-  <summary>MIT License</summary>
-  <strong>Copyright © 2020, Wylarel</strong>
+<details><summary>MIT License</summary>
+Copyright © 2020 Wylarel
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-  The Software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders X be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the Software.
-
-  Except as contained in this notice, the name of Wylarel shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization from Wylarel.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </details>
