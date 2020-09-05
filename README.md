@@ -35,7 +35,7 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 - [ ] Améliorer le design de la page de connexion et d'inscription
 - [ ] Intégrer tawk.to sur mobile
 
-### [License](#license)
+### [License (en Anglais)](#license)
 
 ## <img src="https://raw.githubusercontent.com/hjnilsson/country-flags/master/svg/gb.svg" height="17px"> A mobile app for the students of the Athénée de Waha
 The Waha application allows all students of the Athénée de Waha to, in a few seconds:
