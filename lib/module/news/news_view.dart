@@ -5,6 +5,9 @@ import 'package:waha/widget/drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:waha/widget/load.dart';
 import 'package:package_info/package_info.dart';
+import 'package:yaml/yaml.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 class NewsPage extends StatelessWidget {
@@ -63,10 +66,16 @@ class _AppVersionTextState extends State<AppVersionText> {
   }
 
   void updateVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      version = "${packageInfo.version}+${packageInfo.buildNumber}";
-    });
+    if(kIsWeb) {
+      setState(() {
+        version = "";
+      });
+    } else {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      setState(() {
+        version = "${packageInfo.version}+${packageInfo.buildNumber}";
+      });
+    }
   }
 }
 

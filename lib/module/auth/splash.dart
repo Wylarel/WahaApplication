@@ -41,9 +41,10 @@ Future<Widget> getLandingPage() async {
       if (snapshot.hasData && (!snapshot.data.isAnonymous)) {
         print("User is connected");
         _updateCurrentUserInfo();
+        isConnected = true;
         return NewsPage();
       }
-      print("User is not connected");
+      isConnected = false;
       return LoginPage();
     },
   );

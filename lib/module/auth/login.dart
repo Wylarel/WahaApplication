@@ -1,11 +1,11 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:waha/module/cloudstorage/upload_download_view.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:waha/widget/load.dart';
+
+bool isConnected = false;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -18,13 +18,29 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
-  bool waiting = false;
+  bool landingWait = false;
+  bool waitingForValidation = false;
 
   @override
   initState() {
     emailInputController = new TextEditingController();
     pwdInputController = new TextEditingController();
     super.initState();
+    landingWaitUpdate();
+  }
+
+  void landingWaitUpdate() async {
+    print("Landing; checking if user is connected...");
+    setState(() {
+      landingWait = true;
+    });
+    await Future.delayed(const Duration(seconds: 2), () => "");
+    if(!isConnected) {
+      setState(() {
+        landingWait = false;
+      });
+      print("User is not connected");
+    }
   }
 
   String emailValidator(String value) {
@@ -51,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Form(
+        child: landingWait ? Center(child: Load(100)) : Form(
           key: _loginFormKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 20.0),
-                child: waiting ? Load(100) : RaisedButton(
+                child: waitingForValidation ? Load(100) : RaisedButton(
                   child: Text("Se connecter"),
                   color: Theme
                       .of(context)
@@ -124,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginUser() async {
     if (_loginFormKey.currentState.validate()) {
-      setState(() {waiting = true;});
+      setState(() {waitingForValidation = true;});
       FirebaseAuth _auth = FirebaseAuth.instance;
       try {
         UserCredential authResult = await _auth.signInWithEmailAndPassword(
@@ -143,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
           btnCancelText: "Rééssayer",
           btnCancelOnPress: () {pwdInputController.text = "";},
         ).show();
-        setState(() {waiting = false;});
+        setState(() {waitingForValidation = false;});
         return;
       }
       Navigator.pushNamed(context, "/splash");

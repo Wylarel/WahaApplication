@@ -25,8 +25,9 @@ class DownloadAppPage extends StatelessWidget {
               ),
               FlatButton(
                 onPressed: () {Navigator.pushReplacementNamed(context, "/downloadappdesktop");},
-                color: Colors.redAccent,
+                color: Theme.of(context).primaryColor,
                 textColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Row(
@@ -34,7 +35,7 @@ class DownloadAppPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
-                        child: FaIcon(FontAwesomeIcons.desktop, size: 24.0,),),
+                        child: Transform.translate(offset: Offset(0,3),child: FaIcon(FontAwesomeIcons.desktop, size: 24.0,)),),
                       Text("Desktop", style: TextStyle(fontSize: 20),)
                     ],),
                 ),),
@@ -43,8 +44,9 @@ class DownloadAppPage extends StatelessWidget {
               ),
               FlatButton(
                 onPressed: () {_launchURL("https://play.google.com/store/apps/details?id=com.wylarel.waha");},
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
                 textColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Row(
@@ -52,7 +54,7 @@ class DownloadAppPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
-                        child: FaIcon(FontAwesomeIcons.android, size: 24.0,),),
+                        child: Transform.translate(offset: Offset(0,3),child: FaIcon(FontAwesomeIcons.android, size: 24.0,),),),
                       Text("Android", style: TextStyle(fontSize: 20),)
                     ],),
                 ),),
@@ -63,8 +65,8 @@ class DownloadAppPage extends StatelessWidget {
               ),
               FlatButton(
                 onPressed: () {},
-                color: Colors.black54,
-                textColor: Colors.white,
+                color: Theme.of(context).cardColor,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Row(
@@ -72,7 +74,7 @@ class DownloadAppPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
-                        child: FaIcon(FontAwesomeIcons.apple, size: 24.0),),
+                        child: Transform.translate(offset: Offset(0,1),child: FaIcon(FontAwesomeIcons.apple, size: 24.0),),),
                       Text("iOS", style: TextStyle(fontSize: 20),)
                     ],),
                 ),),
