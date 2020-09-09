@@ -33,10 +33,10 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 - [X] Rajouter un historique de fichiers envoyés dans le front end
 - [X] Trier les notes par date de modification
 - [X] Ajouter le numéro de build sur la page d'accueil pour faciliter le support
+- [X] Faire plusieurs type de news (commencer avec une pour l'école et une pour l'app)
 
 </details>
 
-- [ ] Faire plusieurs type de news (commencer avec une pour l'école et une pour l'app)
 - [ ] Faire un téléchargement propre des fichiers du cloud au lieu de les ouvrir dans le navigateur
 - [ ] Améliorer les messages d'erreur de la page de connexion et d'inscription
 - [ ] Améliorer le design de la page de connexion et d'inscription
