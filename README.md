@@ -25,7 +25,7 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 
 ### Bugs & Todo
 <details>
-  <summary>Done</summary>
+  <summary>✓ Done</summary>
 
 - [x] Rajouter un message d'erreur quand l'utilisateur n'est pas connecté à internet et essaye de s'inscrire
 - [x] Rajouter le lien Google Play dans "Télécharger l'app"
