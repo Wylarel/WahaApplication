@@ -24,16 +24,25 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 <img src="https://raw.githubusercontent.com/WahaDevs/WahaApplication/master/assets/screenshot_vertical_06.png" alt="Waha App Screenshot" width="100px">
 
 ### Bugs & Todo
+<details>
+  <summary>Done ✓</summary>
+
 - [x] Rajouter un message d'erreur quand l'utilisateur n'est pas connecté à internet et essaye de s'inscrire
 - [x] Rajouter le lien Google Play dans "Télécharger l'app"
 - [X] Rajouter une trace de l'utilisateur qui a upload le fichier dans la base de donnée
 - [X] Rajouter un historique de fichiers envoyés dans le front end
 - [X] Trier les notes par date de modification
 - [X] Ajouter le numéro de build sur la page d'accueil pour faciliter le support
+- [X] Faire plusieurs type de news (commencer avec une pour l'école et une pour l'app)
+
+</details>
+
+- [ ] Permettre la création de notes uniquement locales
 - [ ] Faire un téléchargement propre des fichiers du cloud au lieu de les ouvrir dans le navigateur
 - [ ] Améliorer les messages d'erreur de la page de connexion et d'inscription
 - [ ] Améliorer le design de la page de connexion et d'inscription
 - [ ] Intégrer tawk.to sur mobile
+- [ ] Les horaires
 
 ### [License (en Anglais)](#license)
 
@@ -52,11 +61,13 @@ This document has not been translated in its entirety because the target audienc
 
 ### License
 <details><summary>MIT License</summary>
-<strong>Copyright © 2020 Wylarel</strong>
+  
+<br>**Copyright © 2020 Wylarel**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 </details>
