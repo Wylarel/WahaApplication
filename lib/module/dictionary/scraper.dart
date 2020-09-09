@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
@@ -10,15 +11,27 @@ Future<List<Definition>> scrapWord(String wordToScrap, BuildContext context) asy
   try {
     response = await http.get(url);
   } catch(KeyError) {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.ERROR,
-      animType: AnimType.BOTTOMSLIDE,
-      title: 'Votre appareil ne semble pas être compatible avec le dictionnaire',
-      desc: 'Cette partie de l\'app est encore en construction, réessayez plus tard !',
-      btnCancelText: "Ok",
-      btnCancelOnPress: () {},
-    )..show();
+    if(kIsWeb) {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.BOTTOMSLIDE,
+        title: 'Votre appareil ne semble pas être compatible avec le dictionnaire',
+        desc: 'Cette partie de l\'app est encore en construction, réessayez plus tard !',
+        btnCancelText: "Ok",
+        btnCancelOnPress: () {},
+      )..show();
+    } else {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.BOTTOMSLIDE,
+        title: 'Vous n\'êtes pas connecté·e à internet',
+        desc: 'Vérifiez votre connexion ou réessayez plus tard !',
+        btnCancelText: "Ok",
+        btnCancelOnPress: () {},
+      )..show();
+    }
     response = await http.get(url);
   }
   if(response.statusCode != 200) {
