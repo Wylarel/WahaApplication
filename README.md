@@ -37,6 +37,7 @@ Elle a pour but de simplifier la vie étudiante et administrative pour tous. Dé
 
 </details>
 
+- [ ] Permettre la création de notes uniquement locales
 - [ ] Faire un téléchargement propre des fichiers du cloud au lieu de les ouvrir dans le navigateur
 - [ ] Améliorer les messages d'erreur de la page de connexion et d'inscription
 - [ ] Améliorer le design de la page de connexion et d'inscription
